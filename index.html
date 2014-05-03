@@ -1,0 +1,228 @@
+<html>
+	<head>
+    <link rel="stylesheet" type="text/css" href="shadows.css">
+	</head>
+	<body ng-app="shadowrun_app" class="ng-scope">
+	  <div class="app_container" ng-controller="ShadowrunCtrl" ng-cloak>
+      <div class="description">{{description}}</div>
+
+      <!-- Priority Table -->
+      <div class="priorities">
+        <div class="col">
+          <h2>Priority</h2>
+          <div class="priority_row choose_default"></div>
+          <div class="priority_row row_A"><span>A</span></div>
+          <div class="priority_row row_B"><span>B</span></div>
+          <div class="priority_row row_C"><span>C</span></div>
+          <div class="priority_row row_D"><span>D</span></div>
+          <div class="priority_row row_E"><span>E</span></div>
+        </div>
+
+        <div class="col metatype" ng-model="chosen_metatype">
+          <h2>Metatype</h2>
+
+          <div class="row choose_default" ng-click="update('metatypes')">
+            <span>None</span>
+          </div>
+
+          <div value="{{option.value}}" class="row row_{{option.value}}"
+            ng-repeat="option in metatypes"
+            ng-disabled="check_disabled(option)"
+            ng-click="!option.selectable || update(option)"
+            
+            ng-class="{'disabled': !option.selectable, 'selected': option.chosen}"
+            >
+            <div class="test" ng-bind-html="option.label"></div>
+            </div>
+        </div>
+
+        <div class="col" ng-model="chosen_stats">
+          <h2>Attributes</h2>
+
+          <div class="row choose_default" ng-click="update('stats')">
+            <span>None</span>
+          </div>
+
+          <div  value="{{option.value}}" class="row row_{{option.value}}"
+                ng-repeat="option in stats"
+                ng-disabled="check_disabled(option)"
+                ng-click="!option.selectable || update(option)"
+                ng-class="{'disabled': !option.selectable, 'selected': option.chosen}"
+                ><span>{{option.label}}</span>
+                </div>
+
+        </div>
+
+        <div class="col magic" ng-model="chosen_magic">
+          <h2>Magic / Resonance</h2>
+
+          <div class="row choose_default" ng-click="update('magic')">
+            <span>None</span>
+          </div>
+
+          <div  value="{{option.value}}" class="row row_{{option.value}} align_left"
+                ng-repeat="option in magic"
+                ng-disabled="check_disabled(option)"
+                ng-click="!option.selectable || update(option)"
+                ng-bind-html="option.label"
+                ng-class="{'disabled': !option.selectable, 'selected': option.chosen}"
+                ></div>
+        </div>
+
+        <div class="col" ng-model="chosen_skills">
+          <h2>Skills</h2>
+
+          <div class="row choose_default" ng-click="update('skills')">
+            <span>None</span>
+          </div>
+
+          <div  value="{{option.value}}" class="row row_{{option.value}}"
+                ng-repeat="option in skills"
+                ng-disabled="check_disabled(option)"
+                ng-click="!option.selectable || update(option)"
+                ng-class="{'disabled': !option.selectable, 'selected': option.chosen}"
+                ><span>{{option.label}}</span></div>
+        </div>
+
+        <div class="col" ng-model="chosen_resources">
+          <h2>Resources</h2>
+
+          <div class="row choose_default" ng-click="update('resources')">
+            <span>None</span>
+          </div>
+
+          <div  value="{{option.value}}" class="row row_{{option.value}}"
+                ng-repeat="option in resources"
+                ng-disabled="check_disabled(option)"
+                ng-click="!option.selectable || update(option)"
+                ng-class="{'disabled': !option.selectable, 'selected': option.chosen}"
+                ><span>{{option.label}}</span></div>
+        </div>
+      </div>
+
+      <div class="row_container">
+        <!-- Metatype Container -->
+        <div class="container metatype">
+          <h2>Metatype ({{ chosen_attributes['metatypes'] || 'Not selected'}})</h2>
+
+          <div ng-repeat="race in races" 
+               ng-hide="chosen_attributes['metatypes'] === ''"
+               class="row" 
+               ng-click="choose_race(race)"
+               ng-class="{'selected': (chosen_attributes['race'] === race.race), 'disabled': (race.priorities[chosen_attributes['metatypes']].value === '-')}">
+            {{race.race}}
+            <span ng-show="(race.priorities[chosen_attributes['metatypes']].value !== '-')">
+              ({{race.priorities[chosen_attributes['metatypes']].value}})
+            </span>
+          </div>
+
+          <div ng-show="(chosen_attributes['race'] !== '')" class="row racials align_left">
+          {{chosen_attributes['racials']}}
+          </div>
+        </div>
+
+        <!-- Stats Container -->
+        <div class="container no_margin stats">
+          <h2>Attributes ({{chosen_attributes['stats'] || 'Not selected'}} - {{chosen_attributes['remaining_stat_points']}} Points Remaining)</h2>
+         
+          <div  class="metatype_options">
+            <div ng-repeat="race in races"
+                 ng-show="(chosen_attributes['race'] === race.race)">
+              <div class="full_row">
+                <div class="row" ng-repeat="attribute in race.attributes">
+                  {{attribute.label}}
+                </div>
+              </div>
+              <div class="full_row">
+                <div class="row row_E" ng-repeat="attribute in race.attributes">
+                  {{attribute.current}} /  {{attribute.max}}
+                </div>
+              </div>
+              <div class="full_row">
+                <div class="row" ng-repeat="attribute in race.attributes">
+                  <span ng-click="increase_attribute(attribute)">+</span>
+                  <span ng-click="decrease_attribute(attribute)">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row_container">
+        <!-- Special Container -->
+        <div class="container specials">
+          <h2>Specials ({{chosen_attributes['race_points']}} Points Remaining)</h2>
+
+          <div class="special_header_row">
+            <div class="row">Edge</div>
+            <div class="row">Magic</div>
+            <div class="row">Reson</div>
+          </div>
+
+          <div class="special_details_row">
+            <div class="row">{{chosen_attributes['my_specials'].edge}} / {{chosen_attributes['my_specials'].max_edge}}</div>
+            <div class="row"></div>
+            <div class="row"></div>
+          </div>
+
+          <div class="special_adjustment_row">
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+          </div>
+        </div>
+
+        <!-- Limits Container -->
+        <div class="container limits">
+          <h2>Limits</h2>
+          <div class="full_row">
+            <div class="row phy">Physical</div>
+            <div class="row men">Mental</div>
+            <div class="row soc">Social</div>
+          </div>
+          <div class="full_row">
+            <div class="row phy" ng-bind="get_limits('physical')">Physical</div>
+            <div class="row men" ng-bind="get_limits('mental')">Mental</div>
+            <div class="row soc" ng-bind="get_limits('social')">Social</div>
+          </div>
+        </div>
+
+        <!-- Initiative Container -->
+        <div class="container no_margin initiative">
+          <h2>Initiatives</h2>
+          <div class="full_row">
+            <div class="row">Physical</div>
+            <div class="row">Astral</div>
+            <div class="row">Rigging</div>
+            <div class="row">Matrix</div>
+            <div class="row">VR Hot</div>
+            <div class="row">VR Cold</div>
+          </div>
+          <div class="full_row">
+            <div class="row" ng-bind="get_initiative('physical')"></div>
+            <div class="row" ng-bind="get_initiative('astral')"></div>
+            <div class="row" ng-bind="get_initiative('rigging')"></div>
+            <div class="row" ng-bind="get_initiative('matrix')"></div>
+            <div class="row" ng-bind="get_initiative('vrhot')"></div>
+            <div class="row" ng-bind="get_initiative('vrcold')"></div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+<script type="text/javascript" src="lib/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="lib/angular.min.js"></script>
+<script type="text/javascript" src="lib/angular-resource.min.js"></script>
+<script type="text/javascript" src="lib/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="Shadowrun.js"></script>
+
+
+	</body>
+</html>
