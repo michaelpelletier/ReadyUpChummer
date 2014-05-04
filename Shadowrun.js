@@ -13,7 +13,6 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 //myApp.directive('myDirective', function() {});
 //myApp.factory('myService', function() {});
 
-//function MyCtrl($scope, $timeout) {
   // Original Data
   $scope.metatypes = [
     { value: 'A', selectable: true, chosen: false, type: 'metatypes', label: 'Human (9)<br>Elf (8)<br>Dwarf (7)<br>Ork (7)<br>Troll (5)' },
@@ -191,7 +190,14 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     "stat_points": 0,
     "remaining_stat_points": 0,
     "my_stats": {
-      "bod": 1, "agi": 1, "rea": 1, "str": 1, "wil": 1, "log": 1, "int": 1, "cha": 1
+      "bod": { label: 'bod', current: 1, minimum: 1, maximum: 6 },
+      "agi": { label: 'agi', current: 1, minimum: 1, maximum: 6 },
+      "rea": { label: 'rea', current: 1, minimum: 1, maximum: 6 },
+      "str": { label: 'str', current: 1, minimum: 1, maximum: 6 },
+      "wil": { label: 'wil', current: 1, minimum: 1, maximum: 6 },
+      "log": { label: 'log', current: 1, minimum: 1, maximum: 6 },
+      "int": { label: 'int', current: 1, minimum: 1, maximum: 6 },
+      "cha": { label: 'cha', current: 1, minimum: 1, maximum: 6 }
     },
     // Specials
     "my_specials": {
@@ -227,7 +233,7 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   $scope.reset_attributes = function(new_type) {
     switch(new_type) {
       case "metatypes":
-        $scope.chosen_attributes['race'] = "";
+      //  $scope.chosen_attributes['race'] = "";
       break;
       case "stats":
         $scope.chosen_attributes['stat_points'] = 0;
@@ -330,25 +336,61 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   // Metatype & Race
   $scope.choose_race = function(option) {
     $scope.chosen_attributes['race'] = option.race;
-    $scope.chosen_attributes['race_points'] = option.priorities[$scope.chosen_attributes['metatypes']].value;
+
+    if ($scope.chosen_attributes['metatypes']) {
+      $scope.chosen_attributes['race_points'] = option.priorities[$scope.chosen_attributes['metatypes']].value;
+    }
+    
     $scope.chosen_attributes['racials'] = option.racials;
     $scope.chosen_attributes['my_specials'].edge = option.edge[0].min;
     $scope.chosen_attributes['my_specials'].max_edge = option.edge[0].max;
 
-    $scope.reset_attributes('race');
+  //  $scope.reset_attributes('race');
 
-    $.each($scope.races, function(key, value) {
-      if (value.race === option) {
-        $scope.chosen_attributes['my_stats'] = {
-          "bod": value.attributes[0].min,
-          "agi": value.attributes[1].min,
-          "rea": value.attributes[2].min,
-          "str": value.attributes[3].min,
-          "wil": value.attributes[4].min,
-          "log": value.attributes[5].min,
-          "int": value.attributes[6].min,
-          "cha": value.attributes[7].min
-        }
+    $.each($scope.chosen_attributes['my_stats'], function(key, value){
+      switch(value.label) {
+        case 'bod':
+          index = 0;
+        break;
+        case 'agi':
+          index = 1;
+        break;
+        case 'rea':
+          index = 2;
+        break;
+        case 'str':
+          index = 3;
+        break;
+        case 'wil':
+          index = 4;
+        break;
+        case 'log':
+          index = 5;
+        break;
+        case 'int':
+          index = 6;
+        break;
+        case 'cha':
+          index = 7;
+        break;
+      } 
+
+      $scope.chosen_attributes['my_stats'][value.label].minimum = option.attributes[index].min;
+      $scope.chosen_attributes['my_stats'][value.label].maximum = option.attributes[index].max;
+
+      if ($scope.chosen_attributes['my_stats'][value.label].current < option.attributes[index].min) {
+        $scope.chosen_attributes['my_stats'][value.label].current = option.attributes[index].min
+      }
+
+      if ($scope.chosen_attributes['my_stats'][value.label].current > $scope.chosen_attributes['my_stats'][value.label].minimum) {
+        var difference = $scope.chosen_attributes['my_stats'][value.label].current - $scope.chosen_attributes['my_stats'][value.label].minimum;
+
+        $scope.chosen_attributes['remaining_stat_points'] = $scope.chosen_attributes['remaining_stat_points'] - difference;
+        // Not going to work because what if they do not haev Stat points chosen? What happens when they choose new ones? Etc. Going to be complicated. 
+
+        // Okay what if we do it like this. When we choose Stats Priority, we check "remaining_stat_points" to see if it's different from Stat Points. See how off it is, and subtract that from the new remaining. That might actually work.
+
+
       }
     });
 
@@ -358,13 +400,13 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   // Limits
   $scope.get_limits = function(type) {
     var limit;
-    var strength  = $scope.chosen_attributes['my_stats']['str'];
-    var charisma  = $scope.chosen_attributes['my_stats']['cha'];
-    var reaction  = $scope.chosen_attributes['my_stats']['rea'];
-    var intuition = $scope.chosen_attributes['my_stats']['int'];
-    var logic     = $scope.chosen_attributes['my_stats']['log'];
-    var willpower = $scope.chosen_attributes['my_stats']['wil'];
-    var body      = $scope.chosen_attributes['my_stats']['bod'];
+    var strength  = $scope.chosen_attributes['my_stats']['str'].current;
+    var charisma  = $scope.chosen_attributes['my_stats']['cha'].current;
+    var reaction  = $scope.chosen_attributes['my_stats']['rea'].current;
+    var intuition = $scope.chosen_attributes['my_stats']['int'].current;
+    var logic     = $scope.chosen_attributes['my_stats']['log'].current;
+    var willpower = $scope.chosen_attributes['my_stats']['wil'].current;
+    var body      = $scope.chosen_attributes['my_stats']['bod'].current;
     var essence   = $scope.chosen_attributes['essence'];
 
     switch(type) {
@@ -386,9 +428,9 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
   // Initiatives
   $scope.get_initiative = function(type) {
-    var reaction = $scope.chosen_attributes['my_stats']['rea'];
-    var intuition = $scope.chosen_attributes['my_stats']['int'];
-    var data_processing = "";
+    var reaction = $scope.chosen_attributes['my_stats']['rea'].current;
+    var intuition = $scope.chosen_attributes['my_stats']['int'].current;
+    var data_processing = 0;
     var initiative = 0;
     var dice = "";
 
@@ -411,11 +453,11 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
       break;
       case "vrhot":
         dice = "3d6";
-        //initiative = "";
+        initiative = data_processing + intuition;
       break;
       case "vrcold":
         dice = "4d6";
-       // initiative = "";
+        initiative = data_processing + intuition;
       break;
     }
 
@@ -495,5 +537,42 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
   $scope.description = "'Ready Up, Chummer' is a Character Creation tool for Shadowrun 5th Edition";
 //}
+
+
+
+
+
+  $scope.get_classes = function(race) {
+    var selected = $scope.chosen_attributes['race'] === race.race;
+    var disabled = false;
+
+      if ($scope.chosen_attributes['metatypes'] === "") {
+        disabled = true;
+      } else if (race.priorities[$scope.chosen_attributes['metatypes']].value === '-') {
+        disabled = true;
+      } 
+    //}
+
+    console.log($scope.chosen_attributes['metatypes'])
+    console.log(disabled)
+
+    var error = selected && disabled;
+
+    if (error) {
+      return 'error';
+    } else if (selected) {
+      return 'selected';
+    } else if (disabled) {
+      return 'disabled';
+    }
+  }
+
+
+
+
+
+
+
+
 
 }]);

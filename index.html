@@ -32,7 +32,7 @@
             
             ng-class="{'disabled': !option.selectable, 'selected': option.chosen}"
             >
-            <div class="test" ng-bind-html="option.label"></div>
+            <div class="corners" ng-bind-html="option.label"></div>
             </div>
         </div>
 
@@ -106,12 +106,12 @@
           <h2>Metatype ({{ chosen_attributes['metatypes'] || 'Not selected'}})</h2>
 
           <div ng-repeat="race in races" 
-               ng-hide="chosen_attributes['metatypes'] === ''"
+               
                class="row" 
                ng-click="choose_race(race)"
-               ng-class="{'selected': (chosen_attributes['race'] === race.race), 'disabled': (race.priorities[chosen_attributes['metatypes']].value === '-')}">
+               ng-class="get_classes(race)">
             {{race.race}}
-            <span ng-show="(race.priorities[chosen_attributes['metatypes']].value !== '-')">
+            <span ng-show="((chosen_attributes['metatypes'] !== '') && (race.priorities[chosen_attributes['metatypes']].value !== '-'))">
               ({{race.priorities[chosen_attributes['metatypes']].value}})
             </span>
           </div>
@@ -125,6 +125,24 @@
         <div class="container no_margin stats">
           <h2>Attributes ({{chosen_attributes['stats'] || 'Not selected'}} - {{chosen_attributes['remaining_stat_points']}} Points Remaining)</h2>
          
+
+          <div  class="metatype_options">
+            <div class="col"
+                 ng-repeat="stats in chosen_attributes.my_stats">
+
+                <div class="row">{{stats.label}}</div>  
+                <div class="row">{{stats.current}} / {{stats.maximum}}</div>
+                <div class="row">
+                  <span ng-click="increase_attribute(stats)">+</span>
+                  <span ng-click="decrease_attribute(stats)">-</span>
+                </div>
+           
+            </div>
+          </div>
+
+
+
+       <!--  
           <div  class="metatype_options">
             <div ng-repeat="race in races"
                  ng-show="(chosen_attributes['race'] === race.race)">
@@ -145,7 +163,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
 
@@ -211,18 +229,13 @@
       </div>
 
 
-
     </div>
 
 
-
-
-<script type="text/javascript" src="lib/jquery-2.1.0.min.js"></script>
-<script type="text/javascript" src="lib/angular.min.js"></script>
-<script type="text/javascript" src="lib/angular-resource.min.js"></script>
-<script type="text/javascript" src="lib/angular-sanitize.min.js"></script>
-<script type="text/javascript" src="Shadowrun.js"></script>
-
-
+    <script type="text/javascript" src="lib/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="lib/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular-resource.min.js"></script>
+    <script type="text/javascript" src="lib/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="Shadowrun.js"></script>
 	</body>
 </html>
