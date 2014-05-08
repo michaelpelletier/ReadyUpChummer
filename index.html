@@ -109,7 +109,7 @@
                
                class="row" 
                ng-click="choose_race(race)"
-               ng-class="get_classes(race)">
+               ng-class="get_metatype_classes(race)">
             {{race.race}}
             <span ng-show="((chosen_attributes['metatypes'] !== '') && (race.priorities[chosen_attributes['metatypes']].value !== '-'))">
               ({{race.priorities[chosen_attributes['metatypes']].value}})
@@ -130,7 +130,7 @@
             <div class="col"
                  ng-repeat="stats in chosen_attributes.my_stats">
 
-                <div class="row">{{stats.label}}</div>  
+                <div class="row" ng-class="{'error': stats.overspent === true}">{{stats.label}}</div>  
                 <div class="row">{{stats.current}} / {{stats.maximum}}</div>
                 <div class="row">
                   <span ng-click="increase_attribute(stats)">+</span>
