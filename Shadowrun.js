@@ -226,34 +226,51 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   }
 
   $scope.reset_attributes = function(new_type) {
+    console.log("Clear");
+
     switch(new_type) {
       case "metatypes":
       //  $scope.chosen_attributes['race'] = "";
       break;
       case "stats":
-        $scope.chosen_attributes['stat_points'] = 0;
-        $scope.chosen_attributes['remaining_stat_points'] = 0;
-        reset_stats();
+        reset_stats_priority();
       break;
       case "race":
-        $scope.chosen_attributes['remaining_stat_points'] = $scope.chosen_attributes['stat_points'];
-        reset_stats();
+        //$scope.chosen_attributes['remaining_stat_points'] = $scope.chosen_attributes['stat_points'];
+       //reset_stats();
+      // check_max_stats();
+      break;
+      case "stats_allocation":
+        reset_stats_allocation();
       break;
     }
 
-    function reset_stats() {
-      $.each($scope.races, function(key, value) {
-        value.attributes[0].current = value.attributes[0].min;
-        value.attributes[1].current = value.attributes[1].min;
-        value.attributes[2].current = value.attributes[2].min;
-        value.attributes[3].current = value.attributes[3].min;
-        value.attributes[4].current = value.attributes[4].min;
-        value.attributes[5].current = value.attributes[5].min;
-        value.attributes[6].current = value.attributes[6].min;
-        value.attributes[7].current = value.attributes[7].min;
+    function reset_stats_allocation() {
+      var stats = ["bod", "agi", "rea", "str", "wil", "log", "int", "cha"];
+
+      $.each(stats, function(key, value) {
+        $scope.chosen_attributes['my_stats'][value].current = $scope.chosen_attributes['my_stats'][value].minimum;
+        $scope.chosen_attributes['my_stats'][value].overspent = false;
       });
 
-      $scope.chosen_attributes['my_stats'] = { "bod": 1, "agi": 1, "rea": 1, "str": 1, "wil": 1, "log": 1, "int": 1, "cha": 1 }
+      $scope.chosen_attributes['remaining_stat_points'] = $scope.chosen_attributes['stat_points'];
+    }
+
+    function reset_stats_priority() {
+      $scope.chosen_attributes['stat_points'] = 0;
+ 
+      var used_stats = 0;
+      var stats = ["bod", "agi", "rea", "str", "wil", "log", "int", "cha"];
+
+      $.each(stats, function(key, value) {
+        var difference = $scope.chosen_attributes['my_stats'][value].current - $scope.chosen_attributes['my_stats'][value].minimum;
+        if (difference > 0) {
+          $scope.chosen_attributes['my_stats'][value].overspent = true;
+        }
+        used_stats = used_stats + difference;        
+      });
+
+      $scope.chosen_attributes['remaining_stat_points'] = 0 - used_stats;
     }
   }
 
@@ -295,14 +312,41 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
       $scope.chosen_attributes[new_type] = priorities;
 
       if (new_type === 'stats') {
+        update_stats(priorities);
+      }
+    }
+
+    function update_stats(priorities) {
+      if ($scope.chosen_attributes['stat_points'] = 0) {
         $.each($scope.stats, function(key, value) {
           if (value.value === priorities) {
             $scope.chosen_attributes['stat_points'] = value.label;
             $scope.chosen_attributes['remaining_stat_points'] = value.label;
           }
         });
+      } else {
+        var stats = ["bod", "agi", "rea", "str", "wil", "log", "int", "cha"];
+        var original_stats = $scope.chosen_attributes['stat_points'];
+        var original_used = $scope.chosen_attributes['remaining_stat_points'];
+        var difference = original_stats - original_used;
 
-        console.log($scope.chosen_attributes)
+        $.each($scope.stats, function(key, value) {
+          if (value.value === priorities) {
+            $scope.chosen_attributes['stat_points'] = value.label;
+          }
+        });        
+
+        $scope.chosen_attributes['remaining_stat_points'] = $scope.chosen_attributes['stat_points'] - difference;
+
+        $.each(stats, function(key, value) {
+          var stats_remaining = $scope.chosen_attributes['remaining_stat_points'] >= 0;
+
+          if ($scope.chosen_attributes['my_stats'][value].current === $scope.chosen_attributes['my_stats'][value].minimum) {
+            $scope.chosen_attributes['my_stats'][value].overspent = false;
+          } else {
+            $scope.chosen_attributes['my_stats'][value].overspent = !stats_remaining;
+          }
+        });
       }
     }
 
@@ -425,6 +469,22 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
       $scope.chosen_attributes['remaining_stat_points'] = $scope.chosen_attributes['stat_points'] - total_difference;
     }
 
+    check_max_stats();
+
+
+    function check_max_stats() {
+      var stats = ["bod", "agi", "rea", "str", "wil", "log", "int", "cha"];
+
+      $.each(stats, function(key, value) {
+        if ($scope.chosen_attributes['my_stats'][value].current > $scope.chosen_attributes['my_stats'][value].maximum) {
+          $scope.chosen_attributes['my_stats'][value].overspent = true;
+        }
+      });
+    }
+
+
+
+
 
     console.log($scope.chosen_attributes)
   }
@@ -501,7 +561,7 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     var name = attribute.label.toLowerCase();
     var maximum = parseInt(attribute.maximum);
     var current = parseInt(attribute.current);
-    var maxed = is_maxed();
+    var maxed = $scope.is_maxed();
 
     if ((current < maximum)) {
       if (!maxed) {
@@ -518,50 +578,25 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     function increase_stat() {
       $scope.chosen_attributes['my_stats'][name].current += 1;
       $scope.chosen_attributes['remaining_stat_points'] -= 1;
+      $scope.chosen_attributes['my_stats'][name].overspent = $scope.is_maxed();
     }
+  }
 
-    function is_maxed() {
-      var stats_maxed = 0;
-      var race = $scope.chosen_attributes['race'];
-      var max;
+  $scope.is_maxed = function() {
+    var stats = ["bod", "agi", "rea", "str", "wil", "log", "int", "cha"];
 
-      $.each($scope.races, function(key, value) {
-        if (race === value.race) {
-          max = {
-            "bod": value.attributes[0].max,
-            "agi": value.attributes[1].max,
-            "rea": value.attributes[2].max,
-            "str": value.attributes[3].max,
-            "wil": value.attributes[4].max,
-            "log": value.attributes[5].max,
-            "int": value.attributes[6].max,
-            "cha": value.attributes[7].max
-          }
-        } else {
-          max = {
-            "bod": 6,
-            "agi": 6,
-            "rea": 6,
-            "str": 6,
-            "wil": 6,
-            "log": 6,
-            "int": 6,
-            "cha": 6
-          }
-        }
-      });
+    var stats_maxed = 0;
 
-      $.each($scope.chosen_attributes['my_stats'], function(key, value) {
-        if (value === max[key]) {
-          stats_maxed++;
-        }
-      });
-
-      if (stats_maxed > 0) {
-        return true;
-      } else {
-        return false;
+    $.each(stats, function(key, value) {
+      if ($scope.chosen_attributes['my_stats'][value].current === $scope.chosen_attributes['my_stats'][value].maximum) {
+        stats_maxed += 1;
       }
+    });
+
+    if (stats_maxed > 0) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -569,13 +604,19 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     var name = attribute.label.toLowerCase();
     var minimum = attribute.minimum;
     var current = attribute.current;
+    var maxed = $scope.is_maxed();
 
     if (current > minimum) {
       $scope.chosen_attributes['my_stats'][name].current -= 1;
       $scope.chosen_attributes['remaining_stat_points'] += 1;
     }
 
-    attribute.overspent = $scope.is_overspent(attribute);
+    if (!maxed) {
+      $scope.chosen_attributes['my_stats'][name].overspent = true;
+    } else {
+      $scope.chosen_attributes['my_stats'][name].overspent = false;
+    //  attribute.overspent = $scope.is_overspent(attribute);
+    }   
   }
 
   $scope.is_overspent = function(attribute) {

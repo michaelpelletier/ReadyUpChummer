@@ -106,7 +106,6 @@
           <h2>Metatype ({{ chosen_attributes['metatypes'] || 'Not selected'}})</h2>
 
           <div ng-repeat="race in races" 
-               
                class="row" 
                ng-click="choose_race(race)"
                ng-class="get_metatype_classes(race)">
@@ -123,8 +122,7 @@
 
         <!-- Stats Container -->
         <div class="container no_margin stats">
-          <h2>Attributes ({{chosen_attributes['stats'] || 'Not selected'}} - {{chosen_attributes['remaining_stat_points']}} Points Remaining)</h2>
-         
+          <h2>Attributes ({{chosen_attributes['stats'] || 'Not selected'}} - {{chosen_attributes['remaining_stat_points']}} Points Remaining) - <span ng-click="reset_attributes('stats_allocation')">Clear</span></h2>
 
           <div  class="metatype_options">
             <div class="col"
