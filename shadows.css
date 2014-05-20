@@ -187,9 +187,9 @@ h2 {
 	margin: 2px 2px;
 }
 
-.container.metatype 	{	width: 390px; }
+.container.metatype 	{	width: 425px; }
 .container.stats 			{	width: 560px; }
-.container.specials 	{	width: 198px; }
+.container.specials 	{	width: 390px; }
 .container.limits 		{	width: 220px; }
 .container.initiative {	width: 512px;	}
 
@@ -214,6 +214,11 @@ h2 {
 .container.initiative .row 			{ width: 56px; }
 .container.initiative .row.wide	{ width: 75px; }
 
+/* Specials Bloc */
+.container.specials .row { width: 40px; }
+
+
+
 
 
 /* Generics */
@@ -226,5 +231,14 @@ h2 {
 }
 
 
+/* Controls */
+.row.controls span {
+	display: inline-block;
+	font-size: 30px;
+	vertical-align: top;
+}
+
+.row.controls .add { line-height: 15px; }
+.row.controls .sub { line-height: 10px; }
 
 

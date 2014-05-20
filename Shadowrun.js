@@ -167,6 +167,15 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     }
   ]
 
+  $scope.magic_choices = 
+    {
+      "magician": { label: "Magician",          A: 6, B: 4, C: 3, selectable: false, chosen: false, error: false },
+      "mystic":   { label: "Mystic Adept",      A: 6, B: 4, C: 3, selectable: false, chosen: false, error: false },
+      "techno":   { label: "Technomancer",      A: 6, B: 4, C: 3, selectable: false, chosen: false, error: false },
+      "aspect":   { label: "Aspected Magician", B: 5, C: 4, D: 2, selectable: false, chosen: false, error: false },
+      "adept":    { label: "Adept",             B: 6, C: 4, D: 2, selectable: false, chosen: false, error: false }
+    }
+
   // My selections
   $scope.chosen_priorities = { "A": '', "B": '' , "C": '', "D": '', "E": '' }
 
@@ -180,6 +189,7 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     // Metatype
     "race": '',
     "race_points": 0,
+    "max_race_points": 0,
     "racials": '',
     // Attributes
     "stat_points": 0,
@@ -194,10 +204,13 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
       "int": { label: 'int', current: 1, minimum: 1, maximum: 6, overspent: false },
       "cha": { label: 'cha', current: 1, minimum: 1, maximum: 6, overspent: false }
     },
+    // Magic
+    "chosen_magic": '',
     // Specials
     "my_specials": {
-      "edge": 1, "magic": 0, "resonance": 0,
-      "max_edge": 0, "max_magix": 6, "max_resonance": 6
+      "edge":   { label: 'edge',      current: 1, minimum: 1, maximum: 6 },
+      "magic":  { label: 'magic',     current: 0, minimum: 0, maximum: 0 },
+      "reson":  { label: 'resonance', current: 0, minimum: 0, maximum: 0 }
     },
     "essence": 6
   }
@@ -243,6 +256,10 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
       case "stats_allocation":
         reset_stats_allocation();
       break;
+      case "chosen_magic":
+        reset_magic_allocation();
+      break;
+
     }
 
     function reset_stats_allocation() {
@@ -272,6 +289,17 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
       $scope.chosen_attributes['remaining_stat_points'] = 0 - used_stats;
     }
+
+    function reset_magic_allocation() {
+      $scope.chosen_attributes['my_specials']['magic'].minimum = 0;
+      $scope.chosen_attributes['my_specials']['magic'].current = 0;
+      $scope.chosen_attributes['my_specials']['magic'].maximum = 0;
+      $scope.chosen_attributes['my_specials']['reson'].minimum = 0;
+      $scope.chosen_attributes['my_specials']['reson'].current = 0;
+      $scope.chosen_attributes['my_specials']['reson'].maximum = 0;
+    }
+
+
   }
 
   $scope.update = function(option) {
@@ -404,11 +432,9 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     }
     
     $scope.chosen_attributes['racials'] = option.racials;
-    $scope.chosen_attributes['my_specials'].edge = option.edge[0].min;
-    $scope.chosen_attributes['my_specials'].max_edge = option.edge[0].max;
-
-  //  $scope.reset_attributes('race');
-
+    $scope.chosen_attributes['my_specials']['edge'].minimum = option.edge[0].min;
+    $scope.chosen_attributes['my_specials']['edge'].current = option.edge[0].min;
+    $scope.chosen_attributes['my_specials']['edge'].maximum = option.edge[0].max;
     var total_difference = 0;
 
     $.each($scope.chosen_attributes['my_stats'], function(key, value){
@@ -450,16 +476,6 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
         var difference = $scope.chosen_attributes['my_stats'][value.label].current - $scope.chosen_attributes['my_stats'][value.label].minimum;
         total_difference = total_difference + difference;
         console.log(difference)
-
-        // If we have stats chosen
-
-
-    //  $scope.chosen_attributes['remaining_stat_points'] = $scope.chosen_attributes['remaining_stat_points'] - difference;
-        // Not going to work because what if they do not haev Stat points chosen? What happens when they choose new ones? Etc. Going to be complicated. 
-
-        // Okay what if we do it like this. When we choose Stats Priority, we check "remaining_stat_points" to see if it's different from Stat Points. See how off it is, and subtract that from the new remaining. That might actually work.
-
-
       }
     });
 
@@ -481,10 +497,6 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
         }
       });
     }
-
-
-
-
 
     console.log($scope.chosen_attributes)
   }
@@ -573,8 +585,6 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
       }
     }
 
-    attribute.overspent = $scope.is_overspent(attribute);
-
     function increase_stat() {
       $scope.chosen_attributes['my_stats'][name].current += 1;
       $scope.chosen_attributes['remaining_stat_points'] -= 1;
@@ -593,7 +603,7 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
       }
     });
 
-    if (stats_maxed > 0) {
+    if (stats_maxed === 1) {
       return true;
     } else {
       return false;
@@ -602,47 +612,122 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
   $scope.decrease_attribute = function(attribute) {
     var name = attribute.label.toLowerCase();
-    var minimum = attribute.minimum;
-    var current = attribute.current;
-    var maxed = $scope.is_maxed();
 
-    if (current > minimum) {
+    if ($scope.chosen_attributes['my_stats'][name].current > $scope.chosen_attributes['my_stats'][name].minimum) {
       $scope.chosen_attributes['my_stats'][name].current -= 1;
       $scope.chosen_attributes['remaining_stat_points'] += 1;
     }
-
-    if (!maxed) {
-      $scope.chosen_attributes['my_stats'][name].overspent = true;
-    } else {
-      $scope.chosen_attributes['my_stats'][name].overspent = false;
-    //  attribute.overspent = $scope.is_overspent(attribute);
-    }   
   }
 
-  $scope.is_overspent = function(attribute) {
-    if ($scope.chosen_attributes['remaining_stat_points'] >= 0) {
-      overspent = false;
-    } else if (attribute.current === attribute.minimum) {
-      overspent = false;
-    } else {
+  $scope.check_overspent = function(attribute) {
+    var name = attribute.label;
+    if ($scope.chosen_attributes['remaining_stat_points'] < 0) {
       overspent = true;
+    } else {
+      overspent = false;
+
+      if ($scope.chosen_attributes['my_stats'][name].current > $scope.chosen_attributes['my_stats'][name].maximum) {
+        overspent = true;
+      }
     }
     return overspent;
   }
+
+  // Magic & Resonance
+  $scope.choose_magic = function(magic) {
+    $scope.chosen_attributes['chosen_magic'] = magic;
+
+    $.each($scope.magic_choices, function(key, value) {
+      value.selected = false;
+    });
+
+    magic.selected = true;
+
+    if ($scope.chosen_attributes['magic'] !== '') {
+      var priority = $scope.chosen_attributes['magic'];
+
+      // So if we have a priority chosen
+      if ($scope.chosen_attributes['chosen_magic'] !== '') {
+        // And we have a class chosen
+        var type = "magic";
+
+        if (magic.label === "Technomancer") {
+          type = "reson";
+        }
+
+        $scope.reset_attributes('chosen_magic');
+        $scope.chosen_attributes['race_points'] = $scope.chosen_attributes['max_race_points'];
+
+        $scope.chosen_attributes['my_specials'][type].minimum = magic[priority];
+        $scope.chosen_attributes['my_specials'][type].current = magic[priority];
+        $scope.chosen_attributes['my_specials'][type].maximum = 6;
+      }
+    }
+  }
+
+
+  // Specials
+  $scope.increase_specials = function(special) {
+    console.log(special)
+
+    if ($scope.chosen_attributes['my_specials'][special].current < $scope.chosen_attributes['my_specials'][special].maximum) {
+      console.log("Under the limit")
+      increase_ranks();
+    }
+
+    function increase_ranks() {
+      $scope.chosen_attributes['my_specials'][special].current += 1;
+      $scope.chosen_attributes['race_points'] -= 1;
+    }
+  }
+
+  $scope.get_magic_classes = function(magic) {
+    var priority = $scope.chosen_attributes['magic'];
+    var disabled = false;
+
+    if (priority === "") {
+      disabled = true;
+    } else {
+      if (magic[priority] === undefined) {
+        disabled = true;
+      }
+    }
+
+    magic.error = (disabled && magic.selected)
+    magic.disabled = disabled;
+
+    if (magic.error) {
+      return 'error';
+    } else if (disabled) {
+      return 'disabled';
+    } else if (magic.selected) {
+      return 'selected';
+    }
+  }
+
 
 
 
   $scope.description = "'Ready Up, Chummer' is a Character Creation tool for Shadowrun 5th Edition";
 
 
+/* TO DO */
 
-// Need to be fixed: 
-/*
 
-  - Changing Attribute Priority clears the Stats labels and shit.
-  - Changing Attribute Priority should properly update Points Available.
-  - Changing Race should properly update Points Available.
-*/
+// Changing Race needs to reset Special Points Spent.
+// Changing Chosen Magic User Type needs to reset Special Points Spent.
+// Write function to Decrease Special Points Spent.
+// Figure out why if you have no Priority selected for Magic and you choose a Magic Type, it clears out the Current Special for it.
+// Changing Metatype Priority needs to change Special Points.
+// Stat Calculations are not working correctly when changing Races.
+
+// If you have a Magic User Type chosen and you change priority, the Specials bit needs to change.
+
+
+// Consder the idea of just fucking clearing everything when things are changed. 
+// Trying to persist is becoming very complicated very quickly. 
+
+
 
 
 

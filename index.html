@@ -102,7 +102,7 @@
 
       <div class="row_container">
         <!-- Metatype Container -->
-        <div class="container metatype">
+        <div class="container no_margin metatype">
           <h2>Metatype ({{ chosen_attributes['metatypes'] || 'Not selected'}})</h2>
 
           <div ng-repeat="race in races" 
@@ -120,6 +120,53 @@
           </div>
         </div>
 
+        <!-- Magic Container -->
+        <div class="container magic">
+          <h2>Magic / Resonance ({{chosen_attributes['magic'] || 'Not selected'}})</h2>
+          <div class="full_row">
+            <div ng-repeat="magic in magic_choices" 
+                 ng-class="get_magic_classes(magic)"
+                 ng-click="choose_magic(magic)"
+                 class="row">
+            {{magic.label}} 
+            </div>  
+          </div>
+        </div>
+      </div>
+
+      <div class="row_container">
+        <!-- Specials Container -->
+        <div class="container specials">
+          <h2>Specials ({{chosen_attributes['race_points']}} Points Remaining)</h2>
+
+          <div class="full_row">
+            <div class="row">Edge</div>
+            <div class="row">Magic</div>
+            <div class="row">Reson</div>
+          </div>
+
+          <div class="full_row">
+            <div class="row">{{chosen_attributes['my_specials']['edge'].current}} / {{chosen_attributes['my_specials']['edge'].maximum}}</div>
+            <div class="row">{{chosen_attributes['my_specials']['magic'].current}} / {{chosen_attributes['my_specials']['magic'].maximum}}</div>
+            <div class="row">{{chosen_attributes['my_specials']['reson'].current}} / {{chosen_attributes['my_specials']['reson'].maximum}}</div>
+          </div>
+
+          <div class="full_row">
+            <div class="row controls">
+              <span ng-click="increase_specials('edge')" class="add">+</span>
+              <span ng-click="decrease_specials('edge')" class="sub">-</span>
+            </div>
+            <div class="row controls">
+              <span ng-click="increase_specials('magic')" class="add">+</span>
+              <span ng-click="decrease_specials('magic')" class="sub">-</span>
+            </div>
+            <div class="row controls">
+              <span ng-click="increase_specials('reson')" class="add">+</span>
+              <span ng-click="decrease_specials('reson')" class="sub">-</span>
+            </div>
+          </div>
+        </div>
+
         <!-- Stats Container -->
         <div class="container no_margin stats">
           <h2>Attributes ({{chosen_attributes['stats'] || 'Not selected'}} - {{chosen_attributes['remaining_stat_points']}} Points Remaining) - <span ng-click="reset_attributes('stats_allocation')">Clear</span></h2>
@@ -128,66 +175,19 @@
             <div class="col"
                  ng-repeat="stats in chosen_attributes.my_stats">
 
-                <div class="row" ng-class="{'error': stats.overspent === true}">{{stats.label}}</div>  
+                <div class="row" ng-class="{'error': check_overspent(stats)}">{{stats.label}}</div>  
                 <div class="row">{{stats.current}} / {{stats.maximum}}</div>
-                <div class="row">
-                  <span ng-click="increase_attribute(stats)">+</span>
-                  <span ng-click="decrease_attribute(stats)">-</span>
+                <div class="row controls">
+                  <span ng-click="increase_attribute(stats)" class="add">+</span>
+                  <span ng-click="decrease_attribute(stats)" class="sub">-</span>
                 </div>
            
             </div>
           </div>
-
-
-
-       <!--  
-          <div  class="metatype_options">
-            <div ng-repeat="race in races"
-                 ng-show="(chosen_attributes['race'] === race.race)">
-              <div class="full_row">
-                <div class="row" ng-repeat="attribute in race.attributes">
-                  {{attribute.label}}
-                </div>
-              </div>
-              <div class="full_row">
-                <div class="row row_E" ng-repeat="attribute in race.attributes">
-                  {{attribute.current}} /  {{attribute.max}}
-                </div>
-              </div>
-              <div class="full_row">
-                <div class="row" ng-repeat="attribute in race.attributes">
-                  <span ng-click="increase_attribute(attribute)">+</span>
-                  <span ng-click="decrease_attribute(attribute)">-</span>
-                </div>
-              </div>
-            </div>
-          </div>-->
         </div>
       </div>
 
       <div class="row_container">
-        <!-- Special Container -->
-        <div class="container specials">
-          <h2>Specials ({{chosen_attributes['race_points']}} Points Remaining)</h2>
-
-          <div class="special_header_row">
-            <div class="row">Edge</div>
-            <div class="row">Magic</div>
-            <div class="row">Reson</div>
-          </div>
-
-          <div class="special_details_row">
-            <div class="row">{{chosen_attributes['my_specials'].edge}} / {{chosen_attributes['my_specials'].max_edge}}</div>
-            <div class="row"></div>
-            <div class="row"></div>
-          </div>
-
-          <div class="special_adjustment_row">
-            <div class="row"></div>
-            <div class="row"></div>
-            <div class="row"></div>
-          </div>
-        </div>
 
         <!-- Limits Container -->
         <div class="container limits">
@@ -225,7 +225,6 @@
           </div>
         </div>
       </div>
-
 
     </div>
 
