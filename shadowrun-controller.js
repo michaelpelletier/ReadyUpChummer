@@ -2,9 +2,10 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
 	// Data Retrieval
 	$scope.data_priorities = data_priorities;
-
 	$scope.races = data_races;
 	$scope.magic = data_magic;
+  $scope.skills_col_1 = skills_col_1;
+  $scope.skills_col_2 = skills_col_2;
 
 	// A Few things for Priorities
   $scope.priorities = { 
@@ -35,27 +36,23 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   $scope.stat_points = {current: 0, maximum: 0}
   $scope.my_magic = '';
 
-  $scope.my_specials = {
-    "edge":   { label: 'Edge',  current: 1, minimum: 1, maximum: 6 },
-    "magic":  { label: 'Magic', current: 0, minimum: 0, maximum: 0 },
-    "reson":  { label: 'Resonance', current: 0, minimum: 0, maximum: 0 }
-  }
+  $scope.my_skills = {}
 
   $scope.essence = 6;
 
   $scope.my_attributes = {
-    "Bod": { abbr: "Bod", label: "Body", current: 1, minimum: 1, maximum: 6 },
-    "Agi": { abbr: "Agi", label: "Agility", current: 1, minimum: 1, maximum: 6 },
-    "Rea": { abbr: "Rea", label: "Reaction", current: 1, minimum: 1, maximum: 6 },
-    "Str": { abbr: "Str", label: "Strength", current: 1, minimum: 1, maximum: 6 },
-    "Wil": { abbr: "Wil", label: "Will", current: 1, minimum: 1, maximum: 6 },
-    "Log": { abbr: "Log", label: "Logic", current: 1, minimum: 1, maximum: 6 },
-    "Int": { abbr: "Int", label: "Intuition", current: 1, minimum: 1, maximum: 6 },
-    "Cha": { abbr: "Cha", label: "Charisma", current: 1, minimum: 1, maximum: 6 }
+    "Bod": { abbr: "Bod", label: "Body", current: 1, minimum: 1, maximum: 6, type: 'stat' },
+    "Agi": { abbr: "Agi", label: "Agility", current: 1, minimum: 1, maximum: 6, type: 'stat' },
+    "Rea": { abbr: "Rea", label: "Reaction", current: 1, minimum: 1, maximum: 6, type: 'stat' },
+    "Str": { abbr: "Str", label: "Strength", current: 1, minimum: 1, maximum: 6, type: 'stat' },
+    "Wil": { abbr: "Wil", label: "Will", current: 1, minimum: 1, maximum: 6, type: 'stat' },
+    "Log": { abbr: "Log", label: "Logic", current: 1, minimum: 1, maximum: 6, type: 'stat' },
+    "Int": { abbr: "Int", label: "Intuition", current: 1, minimum: 1, maximum: 6, type: 'stat'},
+    "Cha": { abbr: "Cha", label: "Charisma", current: 1, minimum: 1, maximum: 6, type: 'stat' },
+    "Edge": { abbr: "Edge", label: "Edge", current: 1, minimum: 1, maximum: 6, type: 'special'},
+    "Magic": { abbr: "Magic", label: "Magic", current: 0, minimum: 0, maximum: 0, type: 'special'},
+    "Reson": { abbr: "Reson", label: "Resonance", current: 0, minimum: 0, maximum: 0, type: 'special'}
   }
-
-
-  
 
 
 
@@ -98,6 +95,7 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   	$scope.my_racials = '';
     $scope.update_race_points();
     $scope.reset_attributes();
+    $scope.clear_attributes();
   	$scope.$broadcast('clear_race_styling');
   }
 
@@ -128,6 +126,16 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     $scope.stat_points.current = $scope.stat_points.maximum;
   }
 
+  $scope.clear_attributes = function() { 
+    var stats = ["Bod", "Agi", "Rea", "Str", "Wil", "Log", "Int", "Cha"]
+
+    $.each(stats, function(index, value) {
+      $scope.my_attributes[value].current = 1;
+      $scope.my_attributes[value].minimum = 1;
+      $scope.my_attributes[value].maximum = 6;
+    });
+  }
+
   $scope.update_attributes = function(attributes) {
     var new_attributes = $.parseJSON(attributes);
 
@@ -150,10 +158,17 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     if ($scope.my_race !== '') {
       $.each($scope.my_attributes, function(index, value) {
         if (value.label === attribute.label) {
-          
-          if ((value.current < value.maximum) && ($scope.stat_points.current > 0)) {
-            value.current += 1;
-            $scope.stat_points.current -= 1;
+
+          if (attribute.type === 'special') {
+            if ((value.current < value.maximum) && ($scope.race_points.current > 0)) {
+              value.current += 1;
+              $scope.race_points.current -= 1;
+            }
+          } else {
+            if ((value.current < value.maximum) && ($scope.stat_points.current > 0)) {
+              value.current += 1;
+              $scope.stat_points.current -= 1;
+            }
           }
         }
       });
@@ -166,7 +181,12 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
         
         if (value.current > value.minimum) {
           value.current -= 1;
-          $scope.stat_points.current += 1;
+
+          if (attribute.type === 'special') {
+            $scope.race_points.current += 1;
+          } else {
+            $scope.stat_points.current += 1;
+          }          
         }
       }
     });
@@ -199,95 +219,61 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
       // Set Edge Min and Max by Race
       if ($scope.my_race === "Human") {
-        $scope.my_specials['edge'].maximum = 7;
-        $scope.my_specials['edge'].minimum = 2;
-        $scope.my_specials['edge'].current = 2;
+        $scope.my_attributes['Edge'].maximum = 7;
+        $scope.my_attributes['Edge'].minimum = 2;
+        $scope.my_attributes['Edge'].current = 2;
       } else {
-        $scope.my_specials['edge'].maximum = 6;
-        $scope.my_specials['edge'].minimum = 1;
-        $scope.my_specials['edge'].current = 1;
+        $scope.my_attributes['Edge'].maximum = 6;
+        $scope.my_attributes['Edge'].minimum = 1;
+        $scope.my_attributes['Edge'].current = 1;
       }
     }
 
     // Magic
-    if ($scope.my_magic === '' || $scope.priorities['magic'] === '') {
-      clear_magic('magic');
-      clear_magic('reson');
-    }
+    clear_magic('Magic');
+    clear_magic('Reson');
+ 
+    var magic_stat;
+    if ($scope.my_magic === 'Technomancer') {
+      magic_stat = 'Reson';
+      set_magic('Reson');
+    } else {
+      magic_stat = 'Magic';
+      set_magic('Magic');
+    }    
 
-    if (($scope.my_magic !== '') && ($scope.priorities['magic'] !== '')) {
-      var magic_stat; 
+    function set_magic(type) {
+      $.each($scope.magic, function(key, value) {
+        if (value.label === $scope.my_magic) {
+          var max = 6;
+          var min = value.priorities[$scope.priorities['magic']] || 0;
 
-      $scope.clear_specials();
-
-      if ($scope.my_magic === 'Technomancer') {
-        magic_stat = 'Reson';
-        clear_magic('magic');
-        set_magic('reson');
-      } else {
-        magic_stat = 'Magic';
-        clear_magic('reson');
-        set_magic('magic');
-      }
-
-      function set_magic(type) {
-        $.each($scope.magic, function(key, value) {
-          if (value.label === $scope.my_magic) {
-            var max = 6;
-            var min = value.priorities[$scope.priorities['magic']];
-
-            if (min === '-') {
-              min = 0;
-              max = 0;
-            }
-
-            $scope.my_specials[type].maximum = max;
-            $scope.my_specials[type].minimum = min;
-            $scope.my_specials[type].current = min;
+          if (min === '-') {
+            min = 0;
+            max = 0;
           }
-        });
-      }
-    }
 
+          $scope.my_attributes[type].maximum = max;
+          $scope.my_attributes[type].minimum = min;
+          $scope.my_attributes[type].current = min;
+        }
+      });
+    }
 
     function clear_magic(type) {
-      $scope.my_specials[type].maximum = 0;
-      $scope.my_specials[type].current = 0;
-      $scope.my_specials[type].minimum = 0;
+      $scope.my_attributes[type].maximum = 0;
+      $scope.my_attributes[type].current = 0;
+      $scope.my_attributes[type].minimum = 0;
     }
   }
 
 
   $scope.clear_specials = function() {
-    $.each($scope.my_specials, function(index, value) {
-      value.current = value.minimum;
-    });
+ //   $.each($scope.my_specials, function(index, value) {
+ //     value.current = value.minimum;
+ //   });
   }
 
-
-  $scope.increase_specials = function(special) {
-    $.each($scope.my_specials, function(index, value) {
-      if (value.label === special.label) {
-        
-        if ((value.current < value.maximum) && ($scope.race_points.current > 0)) {
-          value.current += 1;
-          $scope.race_points.current -= 1;
-        }
-      }
-    });
-  }
-
-  $scope.decrease_specials = function(special) {
-    $.each($scope.my_specials, function(index, value) {
-      if (value.label === special.label) {
-        
-        if (value.current > value.minimum) {
-          value.current -= 1;
-          $scope.race_points.current += 1;
-        }
-      }
-    });
-  }
 
 
   // Limits
@@ -317,6 +303,51 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     // Round up.
     limit = Math.ceil(limit / 3);
     return limit;
+  }
+
+  // Skills
+  $scope.add_skill_rank = function(skill_id, ability) {
+    if (!$scope.my_skills[skill_id]) {
+      $scope.my_skills[skill_id] = {};
+      $scope.my_skills[skill_id]['ranks'] = 0;
+      $scope.my_skills[skill_id]['attribute'] = 0;
+    }
+    $scope.my_skills[skill_id].ranks += 1;
+    $scope.my_skills[skill_id].attribute = ability;
+  }
+
+  $scope.remove_skill_rank = function(skill_id) {
+    if ($scope.my_skills[skill_id]) {
+      if ($scope.my_skills[skill_id].ranks > 0) {
+        $scope.my_skills[skill_id].ranks -= 1;
+      }
+    }
+  }
+
+  $scope.get_dice_pool = function(skill_id) {
+    if ($scope.my_skills[skill_id]) {
+      var rank = $scope.my_skills[skill_id].ranks;
+      var attribute = $scope.my_skills[skill_id].attribute;
+      var stat = $scope.my_attributes[attribute].current;
+      var total;
+
+      if (rank === 0) {
+        total = stat - 1;
+      } else {
+        total = stat + rank;
+      }
+
+      return total
+    }
+  }
+
+  $scope.add_specialty = function(skill) {
+    $('[data-id="' + skill + '"]').parent().after('<div class="list-item skill skill_specialty"><span class="skill_name"><input value="New Skill"></span><span class="dice_pool">(+2)</span><span class="ranks"></span><span class="attribute"></span><div class="controls"><div class="clear yellow">x</div></div></div>');
+
+
+    $('.skill_specialty .clear').click(function() {
+      $(this).parents('.skill_specialty').remove();
+    })
   }
 
   // Initiatives
@@ -349,6 +380,10 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     return initiative + " + " + dice;
   }
 
-
-
 }]);
+
+
+
+/* We need to rewrite Resonance and Magic to treak them like Attributes. Did not realise that Magic Skills were based off of them like I should have. I think this is working but it requires double checking. */
+
+/* Add tooltips for Skills so you know you can create Specializations" */

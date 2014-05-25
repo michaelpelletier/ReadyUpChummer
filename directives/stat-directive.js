@@ -6,7 +6,7 @@ Shadowrun.Directives.directive('ngStat', function() {
      		if (column === "stats" || row === "stats") {
           var new_stat;
 
-  	    	if (scope.priorities["attributes"] === '') {
+  	    	if (scope.priorities["stats"] === '') {
             new_stat = 0;
       		} else {
             $.each(scope.data_priorities, function(index, value) {
