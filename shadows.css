@@ -37,7 +37,7 @@ h2 {
   display: inline-block;
   margin: 0px 1px;
   vertical-align: top;
-  width: 75px;
+  width: 85px;
 }
 
 .col.metatype 	{ width: 105px; }
@@ -124,15 +124,15 @@ h2 {
 }
 
 .row.disabled {	background: #333;				 border-color: #333333;	color: #969696; }
-.row.error 		{	background: transparent; border-color: #AF012C;	color: #F50042; }
 .row.selected {	background: transparent; border-color: #4285B7;	color: #4285B7; }
+.row.error 		{	background: transparent; border-color: #AF012C;	color: #F50042; }
 
 .row.disabled .corners:before {	border-top: 15px solid #333333; }
-.row.error		.corners:before {	border-top: 15px solid #AF012C; }
-.row.selected .corners:before {	border-top: 15px solid #4285B7; }
 .row.disabled:before { border-bottom: 15px solid #333333; }
-.row.error:before 	 { border-bottom: 15px solid #AF012C; }
+.row.selected .corners:before {	border-top: 15px solid #4285B7; }
 .row.selected:before { border-bottom: 15px solid #4285B7; }
+.row.error		.corners:before {	border-top: 15px solid #AF012C; }
+.row.error:before 	 { border-bottom: 15px solid #AF012C; }
 
 .row_A { height: 90px; }
 .row_B { height: 90px; }
@@ -195,7 +195,9 @@ h2 {
 
 
 /* Metatype Block */
-.row.racials { width: 364px; }
+.row.racials { width: 365px; }
+
+.metatype .row { min-width: 52px; }
 
 .metatype_options .col {
 	width: 68px;
@@ -242,3 +244,79 @@ h2 {
 .row.controls .sub { line-height: 10px; }
 
 
+
+
+
+
+
+.clear {
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	margin-left: 5px;
+	position: relative;
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+.summary_container {
+	background: #153335;
+	display: inline-block;
+	margin-right: 25px;
+	opacity: 0.8;
+	width: 400px;
+	vertical-align: top;
+}
+
+.summary_block {
+	color: #607A7E;
+	padding: 0px 10px 10px 10px;
+}
+
+.list-item {
+	padding-bottom: 5px;
+}
+
+.list-item:hover {
+	color: #FFF;
+	cursor: default;
+}
+
+.item {
+	display: inline-block;
+	width: 280px;
+}
+
+.rank {
+	display: inline-block;
+	text-align: center;
+	width: 65px;
+}
+
+.controls {
+	display: inline-block;
+	color: #DFDD4B;
+	cursor: pointer;
+	font-weight: bold;
+	width: 25px;
+}
+
+.controls span {
+	display: inline-block;
+	min-width: 10px;
+	text-align: center;
+}
+
+
+.summary_container h2 {
+	background: #1B4B4F;
+	margin-top: 0px;
+	padding: 5px;
+}

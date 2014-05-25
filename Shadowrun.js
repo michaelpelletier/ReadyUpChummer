@@ -298,8 +298,6 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
       $scope.chosen_attributes['my_specials']['reson'].current = 0;
       $scope.chosen_attributes['my_specials']['reson'].maximum = 0;
     }
-
-
   }
 
   $scope.update = function(option) {
