@@ -4,6 +4,7 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 	$scope.data_priorities = data_priorities;
 	$scope.races = data_races;
 	$scope.magic = data_magic;
+  $scope.skills = data_skills;
   $scope.skills_col_1 = skills_col_1;
   $scope.skills_col_2 = skills_col_2;
 
@@ -36,6 +37,7 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   $scope.stat_points = {current: 0, maximum: 0}
   $scope.my_magic = '';
 
+  $scope.skill_points = {single: 0, group: 0}
   $scope.my_skills = {}
 
   $scope.essence = 6;
@@ -192,7 +194,6 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     });
   }
 
-
   // Specials
   $scope.update_race_points = function() {
     // Races
@@ -267,13 +268,11 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     }
   }
 
-
   $scope.clear_specials = function() {
  //   $.each($scope.my_specials, function(index, value) {
  //     value.current = value.minimum;
  //   });
   }
-
 
 
   // Limits
@@ -307,19 +306,46 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
   // Skills
   $scope.add_skill_rank = function(skill_id, ability) {
-    if (!$scope.my_skills[skill_id]) {
-      $scope.my_skills[skill_id] = {};
-      $scope.my_skills[skill_id]['ranks'] = 0;
-      $scope.my_skills[skill_id]['attribute'] = 0;
+
+    if ($scope.skill_points.single > 0) {
+      if (!$scope.my_skills[skill_id]) {
+        $scope.my_skills[skill_id] = {};
+        $scope.my_skills[skill_id]['ranks'] = 0;
+        $scope.my_skills[skill_id]['attribute'] = 0;
+      } 
+
+      if ($scope.my_skills[skill_id].ranks === '') {
+        $scope.my_skills[skill_id].ranks = 0;
+      } 
+
+      if ($scope.my_skills[skill_id].ranks < 6) {
+        $scope.my_skills[skill_id].ranks += 1;
+        $scope.my_skills[skill_id].attribute = ability;
+        $scope.skill_points.single -= 1;
+      }
     }
-    $scope.my_skills[skill_id].ranks += 1;
-    $scope.my_skills[skill_id].attribute = ability;
   }
 
   $scope.remove_skill_rank = function(skill_id) {
-    if ($scope.my_skills[skill_id]) {
-      if ($scope.my_skills[skill_id].ranks > 0) {
-        $scope.my_skills[skill_id].ranks -= 1;
+    var skill = $scope.my_skills[skill_id]
+
+    if (skill) {
+      if (skill.ranks > 0) {
+       skill.ranks -= 1;
+       $scope.skill_points.single += 1;
+
+        if (skill.ranks === 0) {
+          skill.ranks = '';
+
+          var skill_points = $('[data-id="' + skill_id + '"]').parent().find('.skill_specialty').length
+          console.log(skill_points)
+
+          $('[data-id="' + skill_id + '"]').parent().find('.skill_specialty').each(function() {
+            $scope.skill_points.single += 1;
+            $(this).remove();
+          });
+
+        }
       }
     }
   }
@@ -333,6 +359,8 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
       if (rank === 0) {
         total = stat - 1;
+      } else if (rank === '') {
+        total = '';
       } else {
         total = stat + rank;
       }
@@ -342,12 +370,18 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   }
 
   $scope.add_specialty = function(skill) {
-    $('[data-id="' + skill + '"]').parent().after('<div class="list-item skill skill_specialty"><span class="skill_name"><input value="New Skill"></span><span class="dice_pool">(+2)</span><span class="ranks"></span><span class="attribute"></span><div class="controls"><div class="clear yellow">x</div></div></div>');
+    var skill_ranks = $('[data-id="' + skill + '"]').siblings('.ranks').text();
+    if (skill_ranks > 0) {
+      if ($scope.skill_points.single > 0) {
+        $scope.skill_points.single -= 1;
+        $scope.$broadcast('add_specialty', skill);       
+      }
+    }
+  }
 
-
-    $('.skill_specialty .clear').click(function() {
-      $(this).parents('.skill_specialty').remove();
-    })
+  $scope.remove_specialty = function($event) {
+    $scope.skill_points.single += 1;
+    $scope.$broadcast('remove_specialty', $event.target)
   }
 
   // Initiatives
@@ -387,3 +421,6 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 /* We need to rewrite Resonance and Magic to treak them like Attributes. Did not realise that Magic Skills were based off of them like I should have. I think this is working but it requires double checking. */
 
 /* Add tooltips for Skills so you know you can create Specializations" */
+
+
+// Currently no limit on Attributes. You could max all of them if you wanted to.

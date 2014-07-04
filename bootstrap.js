@@ -108,7 +108,7 @@ var data_races = [
       { label: "Int", min: 1, max: 6, current: 1 },
       { label: "Cha", min: 1, max: 5, current: 1 }
       ],
-    priorities: { "A": 7, "B": 4, "C": 1, "D": "-", "E": "-" }
+    priorities: { "A": 7, "B": 4, "C": 0, "D": "-", "E": "-" }
   },
   { race: "Troll", 
     racials: "Thermographic Vision, +1 Reach, +1 Dermal Armor, 100% Lifestyle increase",
@@ -133,6 +133,14 @@ var data_magic = [
 	{ label: "Aspected Magician", priorities: {"A": '-', "B": 5, "C": 4, "D": 2, "E": '-'} },
 	{ label: "Adept", 						priorities: {"A": '-', "B": 6, "C": 4, "D": 2, "E": '-'} }
 ]
+
+var data_skills = {
+  "A": {single: 46, group: 10},
+  "B": {single: 38, group: 5},
+  "C": {single: 28, group: 2},
+  "D": {single: 22, group: 0},
+  "E": {single: 10, group: 0}
+}
 
 
 
@@ -199,7 +207,7 @@ var skills_col_1 = [
 ];
 
 var skills_col_2 = [
-{ category: 'Physical', groups: [
+    { category: 'Physical', groups: [
         { name: 'Misc', skills: [
               {name: 'Diving', id: 11, attribute: 'Bod'}, 
               {name: 'Escape Artist', id: 12, attribute: 'Agi'}, 
@@ -259,4 +267,4 @@ var skills_col_2 = [
               {name: 'Registering', id: 34, attribute: 'Reson'}]}
      ]
     }
-]
+];
