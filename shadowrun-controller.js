@@ -413,10 +413,6 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     }
   }
 
-
-
-
-
   $scope.get_dice_pool = function(skill_id) {
     if ($scope.my_skills[skill_id]) {
       var rank = $scope.my_skills[skill_id].ranks;
@@ -485,9 +481,5 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
 
 
-/* We need to rewrite Resonance and Magic to treak them like Attributes. Did not realise that Magic Skills were based off of them like I should have. I think this is working but it requires double checking. */
-
-/* Add tooltips for Skills so you know you can create Specializations" */
-
-
-// Currently no limit on Attributes. You could max all of them if you wanted to.
+// Currently no limit on Attributes. You could max all of them if you wanted to. Should only be able to max 1.
+// If you add a Skill Rank before adding the Group you can kinda cheat the system.

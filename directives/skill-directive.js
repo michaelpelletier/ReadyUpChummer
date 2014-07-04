@@ -33,8 +33,16 @@ return {
           break
         }
 
-        scope.skill_points = {single: single, group: group}
+        clear_skills();
+        scope.skill_points = {single: single, group: group};
       }); 
+
+      function clear_skills() {
+        scope.my_skills = {};
+        $('.skill_specialty').each(function() {
+          $(this).remove();
+        });
+      }
 
       scope.$on('add_specialty', function(event, skill_id) {
         var html = '<div class="list-item skill skill_specialty"><span class="skill_name"><input value="New Skill"></span><span class="dice_pool">(+2)</span><span class="ranks"></span><span class="attribute"></span><div class="controls"><div class="clear yellow" ng-click="remove_specialty($event)">x</div></div></div>';
