@@ -148,20 +148,19 @@
 
 
 		  <div class="row_container basics">
-		  	<div class="summary_container">
-		  		<h2>Racial Modifiers</h2>
-
-		  		<div class="summary_block">
-						<span ng-bind="my_racials || 'None'"></span>
-		  		</div>
-
-          <h2>Specials ({{race_points.current}} Points Remaining)</h2>
+        <div class="summary_container" ng-stat>
+          <h2>Racial Modifiers</h2>
 
           <div class="summary_block">
+            <span ng-bind="my_racials || 'None'"></span>
+          </div>
 
-              <div ng-repeat="attribute in my_attributes" 
-                 ng-hide="attribute.type !== 'special'"
-                 ng-special>
+          <h2>Attributes ({{stat_points.current}} Points Remaining)</h2>
+
+          <div class="summary_block">
+            <div ng-repeat="attribute in my_attributes" 
+                 ng-hide="attribute.type === 'special'"
+                 ng-attribute>
 
               <div class="list-item">
                 <div class="item">
@@ -179,21 +178,29 @@
           </div>
         </div>
 
-        <div class="summary_container limits"> 
-          <h2>Limits</h2>
+		  	<div class="summary_container">
+          <h2>Specials ({{race_points.current}} Points Remaining)</h2>
 
           <div class="summary_block">
-            <div class="list-item">
-              <div class="item">Physical</div>
-              <div class="rank" ng-bind="get_limits('physical')"></div>
+            <div ng-repeat="attribute in my_attributes" 
+               ng-hide="attribute.type !== 'special'"
+               ng-special>
+              <div class="list-item">
+                <div class="item">
+                  {{attribute.label}}
+                </div>
+                <div class="rank">
+                  {{attribute.current}} / {{attribute.maximum}}
+                </div>
+                <div class="controls">
+                  <span ng-click="increase_attribute(attribute)" class="add">+</span>
+                  <span ng-click="decrease_attribute(attribute)" class="sub">-</span>
+                </div>
+              </div>        
             </div>
             <div class="list-item">
-              <div class="item">Mental</div>
-              <div class="rank" ng-bind="get_limits('mental')"></div>
-            </div>
-            <div class="list-item">
-              <div class="item">Social</div>
-              <div class="rank" ng-bind="get_limits('social')"></div>
+              <div class="item">Essence</div>
+              <div class="rank" ng-bind="get_stats('essence')"></div>
             </div>
           </div>
 
@@ -217,29 +224,57 @@
               <div class="rank" ng-bind="get_initiative('vrcold')"></div>
             </div>
           </div>
+
         </div>
 
 
-		  	<div class="summary_container" ng-stat>
-		  		<h2>Attributes ({{stat_points.current}} Points Remaining)</h2>
+        <div class="summary_container"> 
+          <h2>Stats</h2>
 
           <div class="summary_block">
-            <div ng-repeat="attribute in my_attributes" 
-                 ng-hide="attribute.type === 'special'"
-            		 ng-attribute>
+            <div class="list-item">
+              <div class="item">Physical Limit</div>
+              <div class="rank" ng-bind="get_stats('physical')"></div>
+            </div>
+            <div class="list-item">
+              <div class="item">Mental Limit</div>
+              <div class="rank" ng-bind="get_stats('mental')"></div>
+            </div>
+            <div class="list-item">
+              <div class="item">Social Limit</div>
+              <div class="rank" ng-bind="get_stats('social')"></div>
+            </div>
+          </div>
 
-            	<div class="list-item">
-            		<div class="item">
-            			{{attribute.label}}
-            		</div>
-            		<div class="rank">
-            			{{attribute.current}} / {{attribute.maximum}}
-          			</div>
-          			<div class="controls">
-          				<span ng-click="increase_attribute(attribute)" class="add">+</span>
-		          	  <span ng-click="decrease_attribute(attribute)" class="sub">-</span>
-		          	</div>
-		          </div>        
+          <div class="summary_block">
+
+          </div>
+          <div class="summary_block">
+            <div class="list-item">
+              <div class="item">Composure</div>
+              <div class="rank" ng-bind="get_stats('composure')"></div>
+            </div>
+            <div class="list-item">
+              <div class="item">Judge Intentions</div>
+              <div class="rank" ng-bind="get_stats('judge')"></div>
+            </div>
+            <div class="list-item">
+              <div class="item">Memory</div>
+              <div class="rank" ng-bind="get_stats('memory')"></div>
+            </div>
+          </div>
+          <div class="summary_block">
+            <div class="list-item">
+              <div class="item">Lift / Carry</div>
+              <div class="rank" ng-bind="get_stats('strength')"></div>
+            </div>
+            <div class="list-item">
+              <div class="item">Walk / Run</div>
+              <div class="rank" ng-bind="get_stats('speed')"></div>
+            </div>        
+            <div class="list-item">
+              <div class="item">Physical / Stun Damage</div>
+              <div class="rank" ng-bind="get_stats('damage')"></div>
             </div>
           </div>
         </div>

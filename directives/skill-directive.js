@@ -97,7 +97,7 @@ Shadowrun.Directives.directive('myTable', function ($compile) {
                 html +=   '<span class="ranks" ng-bind="my_skills.' + skill.id + '.ranks"></span>';
                 html +=   '<span class="attribute">';
                 html +=     '<span ng-bind="my_attributes[' + attributes + '].current"></span>'; 
-                html +=     '(' + skill.attribute + ')';
+                html +=     ' (' + skill.attribute + ')';
                 html +=   '</span>';
                 html +=   '<div class="controls">';
                 html +=     '<span ng-click="add_skill_rank(' + skill_information + ')" class="add">+</span>';

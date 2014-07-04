@@ -130,7 +130,7 @@ var data_magic = [
 	{ label: "Magician", 		 			priorities: {"A": 6, "B": 4, "C": 3, "D": '-', "E": '-'} },
 	{ label: "Mystic Adept", 			priorities: {"A": 6, "B": 4, "C": 3, "D": '-', "E": '-'} },
 	{ label: "Technomancer", 			priorities: {"A": 6, "B": 4, "C": 3, "D": '-', "E": '-'} },
-	{ label: "Aspected Magician", priorities: {"A": '-', "B": 5, "C": 4, "D": 2, "E": '-'} },
+	{ label: "Aspected Magician", priorities: {"A": '-', "B": 5, "C": 3, "D": 2, "E": '-'} },
 	{ label: "Adept", 						priorities: {"A": '-', "B": 6, "C": 4, "D": 2, "E": '-'} }
 ]
 

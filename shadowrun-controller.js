@@ -275,10 +275,11 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   }
 
 
-  // Limits
-  $scope.get_limits = function(type) {
-    var limit;
+  // Stats
+  $scope.get_stats = function(type) {
+    var value;
     var strength  = $scope.my_attributes['Str'].current;
+    var agility   = $scope.my_attributes['Agi'].current;
     var charisma  = $scope.my_attributes['Cha'].current;
     var reaction  = $scope.my_attributes['Rea'].current;
     var intuition = $scope.my_attributes['Int'].current;
@@ -289,20 +290,52 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
     switch(type) {
       case "physical":
-        limit = ((strength * 2) + body + reaction);
+        value = ((strength * 2) + body + reaction);
+        value = Math.ceil(value / 3);
       break;
       case "mental":
-        limit = ((logic * 2) + intuition + willpower);
+        value = ((logic * 2) + intuition + willpower);
+        value = Math.ceil(value / 3);
       break;
       case "social":
-        limit = ((charisma * 2) + willpower + essence);
+        value = ((charisma * 2) + willpower + essence);
+        value = Math.ceil(value / 3);
       break;
+      case "essence": 
+        value = essence;
+      break;
+      case "composure":
+        value = charisma + willpower;
+      break;
+      case "judge":
+        value = charisma + intuition;
+      break;
+      case "memory":
+        value = logic + willpower;
+      break;
+      case "strength":
+        value = (strength * 15) + ' / ' + (strength * 10);
+      break;
+      case "speed":
+        value = (agility * 2) + ' / ' + (agility * 4);
+      break;
+      case "damage":
+        value = ((Math.ceil(body / 2)) + 8) + ' / ' + ((Math.ceil(willpower / 2)) + 8);
+      break;
+
     }
 
-    // Round up.
-    limit = Math.ceil(limit / 3);
-    return limit;
+    return value;
   }
+
+  // Stats
+
+
+
+
+
+
+
 
   // Skills
   $scope.add_skill_rank = function(skill_id, ability) {
