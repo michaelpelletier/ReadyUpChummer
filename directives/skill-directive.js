@@ -66,9 +66,21 @@ Shadowrun.Directives.directive('myTable', function ($compile) {
       angular.forEach(scope[attrs.rows], function (row, index) {
         
         // Category
-        html += '<div class="list-item skill_category"><h2>' + row.category + '</h2></div>';
-        
+        html += '<div class="list-item skill_category">';
+        html +=   '<h2 ng-model="hide_' + row.id + '" ng-click="hide_' + row.id + '=!hide_' + row.id + '">';
+        html +=     row.category;
+        html +=     '<span class="toggle" ng-class="{closed: hide_' + row.id + '}"></span>';
+        html +=     '<div class="labels">';
+        html +=       '<span class="label dice">Dice Pool</span>';
+        html +=       '<span class="label ranks">Ranks</span>';
+        html +=       '<span class="label attr">Attribute</span>';
+        html +=     '</div>';
+        html +=   '</h2>';
+
+
         if ('groups' in row) {
+          html += '<div class="category_skills" ng-hide="hide_' + row.id + '">';
+
           angular.forEach(row.groups, function (group, index) {
             // Only render if Group exists.
             if (group.name !== "Misc") {
@@ -112,7 +124,11 @@ Shadowrun.Directives.directive('myTable', function ($compile) {
             }
 
           });
+
+          html += '</div>';
         }
+
+        html += '</div>';
       });
       html += '</div>';
 

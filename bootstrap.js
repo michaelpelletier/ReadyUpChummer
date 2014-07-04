@@ -148,7 +148,7 @@ var data_skills = {
 
 
 var skills_col_1 = [
-    { category: 'Combat', groups: [
+    { category: 'Combat', id: 5000, groups: [
         { name: 'Misc', id: 1000, skills: [
               {name: 'Archery', id: 0, attribute: 'Agi'},
               {name: 'Exotic Melee Weapon', id: 1, attribute: 'Agi'}, 
@@ -166,7 +166,7 @@ var skills_col_1 = [
               {name: 'Pistols', id: 10, attribute: 'Agi'}]}
       ] 
     },
-    { category: 'Social', groups: [
+    { category: 'Social', id: 5001, groups: [
       { name: 'Misc', id: 1003, skills: [
               {name: 'Animal Handling', id: 23, attribute: 'Cha'}, 
               {name: 'Instruction', id: 24, attribute: 'Cha'}, 
@@ -181,7 +181,7 @@ var skills_col_1 = [
               {name: 'Negotiation', id: 31, attribute: 'Cha'}]}
      ]
     },
-    { category: 'Science / Technical', groups: [
+    { category: 'Science / Technical', id: 5002, groups: [
       { name: 'Misc', id: 1006, skills: [
               {name: 'Armorer', id: 46, attribute: 'Log'}, 
               {name: 'Artisan', id: 47, attribute: 'Int'}, 
@@ -207,7 +207,7 @@ var skills_col_1 = [
 ];
 
 var skills_col_2 = [
-    { category: 'Physical', groups: [
+    { category: 'Physical', id: 5003, groups: [
         { name: 'Misc', id: 1010, skills: [
               {name: 'Diving', id: 11, attribute: 'Bod'}, 
               {name: 'Escape Artist', id: 12, attribute: 'Agi'}, 
@@ -225,10 +225,9 @@ var skills_col_2 = [
               {name: 'Disguise', id: 21, attribute: 'Int'}, 
               {name: 'Palming', id: 22, attribute: 'Agi'}, 
               {name: 'Sneaking', id: 23, attribute: 'Agi'}]}
-
       ] 
     },
-    { category: 'Vehicles', groups: [
+    { category: 'Vehicles', id: 5004, groups: [
         { name: 'Misc', id: 1014, skills: [
               {name: 'Gunnery', id: 35, attribute: 'Agi'}, 
               {name: 'Pilot Aerospace', id: 36, attribute: 'Rea'}, 
@@ -244,7 +243,7 @@ var skills_col_2 = [
               {name: 'Nautical Mechanics', id: 45, attribute: 'Log'}]}
       ] 
     },
-    { category: 'Magic & Resonance', groups: [
+    { category: 'Magic & Resonance', id: 5005, groups: [
       { name: 'Misc', id: 1016, skills: [
               {name: 'Arcane', id: 62, attribute: 'Magic'}, 
               {name: 'Assensing', id: 63, attribute: 'Magic'}, 

@@ -184,6 +184,12 @@ h2 {
 }
 
 /* Blocks */
+.section_toggle {
+	cursor: pointer;
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
 .container {
 	display: inline-block;
 	float: left;
@@ -254,6 +260,7 @@ h2 {
 	margin-top: 0px;
 	min-height: 14px;
 	padding: 5px;
+	vertical-align: top;
 }
 
 .summary_block {
@@ -366,6 +373,19 @@ h2 {
 	width: 210px;
 }
 
+/* Skill Labels */
+
+.labels {
+	display: inline-block;
+	float: right;
+	margin-right: 30px;
+	text-align: right;
+	width: 200px;
+}
+
+.label.dice 	{ margin-right: 20px; }
+.label.ranks 	{	margin-right: 13px; }
+
 /* Generics */
 .align_left {
 	text-align: left;
@@ -375,4 +395,16 @@ h2 {
 .yellow {
 	color: #DFDD4B;
 	font-weight: bold;
+}
+
+.toggle {
+	background: url('images/collapse.png') 0px -20px no-repeat;
+	display: inline-block;
+	height: 13px;
+	margin-left: 5px;
+	width: 13px;
+}
+
+.toggle.closed {
+	background-position: 0px 0px;
 }

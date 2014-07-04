@@ -4,307 +4,271 @@
 	</head>
 	<body ng-app="shadowrun_app" class="ng-scope">
 	  <div class="app_container" ng-controller="ShadowrunCtrl" ng-cloak>
-
-
-	  <div class="priorities">
-			<div class="col explain">
-        <h2> </h2>
-        <div class="priority_row row_A">
-        	<span>A <div class="clear yellow" ng-click="clear_priority('A')">x</div></span>
+   	  <div class="priorities">
+  			<div class="col explain">
+          <h2> </h2>
+          <div class="priority_row row_A">
+          	<span>A <div class="clear yellow" ng-click="clear_priority('A')">x</div></span>
+          </div>
+          <div class="priority_row row_B">
+          	<span>B <div class="clear yellow" ng-click="clear_priority('B')">x</div></span>
+          </div>
+          <div class="priority_row row_C">
+          	<span>C <div class="clear yellow" ng-click="clear_priority('C')">x</div></span>
+          </div>
+          <div class="priority_row row_D">
+          	<span>D <div class="clear yellow" ng-click="clear_priority('D')">x</div></span>
+          </div>
+          <div class="priority_row row_E">
+          	<span>E <div class="clear yellow" ng-click="clear_priority('E')">x</div></span>
+          </div>
         </div>
-        <div class="priority_row row_B">
-        	<span>B <div class="clear yellow" ng-click="clear_priority('B')">x</div></span>
+
+  			<div class="col metatype">
+  	      <h2>Metatype <div class="clear yellow" ng-click="clear_priority('metatypes')">x</div></h2>
+
+  	      <div  class="row row_{{priority.label}}"
+  			        ng-repeat="priority in data_priorities"
+  			        ng-click="choose_priority(priority.label, 'metatypes')"
+  			        ng-class="{'disabled': priorities[priority.label] !== '', 'selected': priorities['metatypes'] === priority.label}"
+  			        >
+  	        <div class="corners" ng-bind-html="priority.metatypes"></div>
+  	      </div>
+  	    </div>
+
+  	    <div class="col stats">
+  	      <h2>Attributes <div class="clear yellow" ng-click="clear_priority('stats')">x</div></h2>
+
+  	      <div  class="row row_{{priority.label}}"
+  	            ng-repeat="priority in data_priorities"
+  	            ng-click="choose_priority(priority.label, 'stats')"
+  	            ng-class="{'disabled': priorities[priority.label] !== '', 'selected': priorities['stats'] === priority.label}"
+  	            >
+  	        <span>{{priority.stats}}</span>
+  		      <div class="corners"></div>
+  	      </div>
+  	    </div>
+
+        <div class="col magic">
+          <h2>Magic / Resonance <div class="clear yellow" ng-click="clear_priority('magic')">x</div></h2>
+
+          <div  class="row row_{{priority.label}} align_left"
+                ng-repeat="priority in data_priorities"
+                ng-click="choose_priority(priority.label, 'magic')"
+                ng-class="{'disabled': priorities[priority.label] !== '', 'selected': priorities['magic'] === priority.label}"
+                >
+  	        <div class="corners" ng-bind-html="priority.magic"></div>
+          </div>
         </div>
-        <div class="priority_row row_C">
-        	<span>C <div class="clear yellow" ng-click="clear_priority('C')">x</div></span>
-        </div>
-        <div class="priority_row row_D">
-        	<span>D <div class="clear yellow" ng-click="clear_priority('D')">x</div></span>
-        </div>
-        <div class="priority_row row_E">
-        	<span>E <div class="clear yellow" ng-click="clear_priority('E')">x</div></span>
-        </div>
-      </div>
 
-			<div class="col metatype">
-	      <h2>Metatype <div class="clear yellow" ng-click="clear_priority('metatypes')">x</div></h2>
+        <div class="col skills">
+          <h2>Skills <div class="clear yellow" ng-click="clear_priority('skills')">x</div></h2>
 
-	      <div  class="row row_{{priority.label}}"
-			        ng-repeat="priority in data_priorities"
-			        ng-click="choose_priority(priority.label, 'metatypes')"
-			        ng-class="{'disabled': priorities[priority.label] !== '', 'selected': priorities['metatypes'] === priority.label}"
-			        >
-	        <div class="corners" ng-bind-html="priority.metatypes"></div>
-	      </div>
-	    </div>
-
-	    <div class="col stats">
-	      <h2>Attributes <div class="clear yellow" ng-click="clear_priority('stats')">x</div></h2>
-
-	      <div  class="row row_{{priority.label}}"
-	            ng-repeat="priority in data_priorities"
-	            ng-click="choose_priority(priority.label, 'stats')"
-	            ng-class="{'disabled': priorities[priority.label] !== '', 'selected': priorities['stats'] === priority.label}"
-	            >
-	        <span>{{priority.stats}}</span>
-		      <div class="corners"></div>
-	      </div>
-	    </div>
-
-      <div class="col magic">
-        <h2>Magic / Resonance <div class="clear yellow" ng-click="clear_priority('magic')">x</div></h2>
-
-        <div  class="row row_{{priority.label}} align_left"
-              ng-repeat="priority in data_priorities"
-              ng-click="choose_priority(priority.label, 'magic')"
-              ng-class="{'disabled': priorities[priority.label] !== '', 'selected': priorities['magic'] === priority.label}"
-              >
-	        <div class="corners" ng-bind-html="priority.magic"></div>
-        </div>
-      </div>
-
-      <div class="col skills">
-        <h2>Skills <div class="clear yellow" ng-click="clear_priority('skills')">x</div></h2>
-
-        <div  class="row row_{{priority.label}}"
-              ng-repeat="priority in data_priorities"
-              ng-click="choose_priority(priority.label, 'skills')"
-              ng-class="{'disabled': priorities[priority.label] !== '', 'selected': priorities['skills'] === priority.label}"
-              >
-              <span>{{priority.skills}}</span>
-          <div class="corners"></div>
-        </div>
-      </div>
-
-      <div class="col resources">
-        <h2>Resources <div class="clear yellow" ng-click="clear_priority('resources')">x</div></h2>
-
-        <div  class="row row_{{priority.label}}"
-              ng-repeat="priority in data_priorities"
-              ng-click="choose_priority(priority.label, 'resources')"
-              ng-class="{'disabled': priorities[priority.label] !== '', 'selected': priorities['resources'] === priority.label}"
-              >
-              <span>{{priority.resources}}</span>
-          <div class="corners"></div>
-        </div>
-      </div>
-
-      
-      <div class="row_container">
-        <!-- Metatype Container -->
-        <div class="container metatype">
-          <h2>Metatype ({{ priorities['metatypes'] || 'Not selected'}}) <div class="clear yellow" ng-click="clear_race_selection()">x</div></h2>
-
-          <div  ng-repeat="race in races" 
-                ng-race="{{race.race}}" 
-                class="row" 
-                ng-attributes="{{race.attributes}}" 
-                ng-racials="{{race.racials}}" 
-                ng-priorities="{{race.priorities}}">
-            {{race.race}}
-
-            <span ng-show="((priorities['metatypes'] !== '') && (race.priorities[priorities['metatypes']] !== '-'))">
-              ({{race.priorities[priorities['metatypes']]}})
-            </span>
+          <div  class="row row_{{priority.label}}"
+                ng-repeat="priority in data_priorities"
+                ng-click="choose_priority(priority.label, 'skills')"
+                ng-class="{'disabled': priorities[priority.label] !== '', 'selected': priorities['skills'] === priority.label}"
+                >
+                <span>{{priority.skills}}</span>
             <div class="corners"></div>
           </div>
         </div>
 
-        <!-- Magic Container -->
-        <div class="container magic">
-          <h2>Magic / Resonance ({{priorities['magic'] || 'Not selected'}}) <div class="clear yellow" ng-click="clear_magic_selection()">x</div></h2>
-          <div class="full_row">
-            <div ng-repeat="mage in magic" 
-                 ng-magic="{{mage.label}}" 
-                 class="row" 
-                 ng-priorities="{{mage.priorities}}">
-            {{mage.label}} 
+        <div class="col resources">
+          <h2>Resources <div class="clear yellow" ng-click="clear_priority('resources')">x</div></h2>
+
+          <div  class="row row_{{priority.label}}"
+                ng-repeat="priority in data_priorities"
+                ng-click="choose_priority(priority.label, 'resources')"
+                ng-class="{'disabled': priorities[priority.label] !== '', 'selected': priorities['resources'] === priority.label}"
+                >
+                <span>{{priority.resources}}</span>
             <div class="corners"></div>
-            </div>  
           </div>
         </div>
 
-      </div>
+        <div class="row_container">
+          <!-- Metatype Container -->
+          <div class="container metatype">
+            <h2>Metatype ({{ priorities['metatypes'] || 'Not selected'}}) <div class="clear yellow" ng-click="clear_race_selection()">x</div></h2>
 
+            <div  ng-repeat="race in races" 
+                  ng-race="{{race.race}}" 
+                  class="row" 
+                  ng-attributes="{{race.attributes}}" 
+                  ng-racials="{{race.racials}}" 
+                  ng-priorities="{{race.priorities}}">
+              {{race.race}}
 
-
-    </div>
-
-
-
-
-
-
-
-    <div class="basics_container">
-
-
-
-
-
-
-      
-
-
-
-		  <div class="row_container basics">
-        <div class="summary_container" ng-stat>
-          <h2>Racial Modifiers</h2>
-
-          <div class="summary_block">
-            <span ng-bind="my_racials || 'None'"></span>
+              <span ng-show="((priorities['metatypes'] !== '') && (race.priorities[priorities['metatypes']] !== '-'))">
+                ({{race.priorities[priorities['metatypes']]}})
+              </span>
+              <div class="corners"></div>
+            </div>
           </div>
 
-          <h2>Attributes ({{stat_points.current}} Points Remaining)</h2>
+          <!-- Magic Container -->
+          <div class="container magic">
+            <h2>Magic / Resonance ({{priorities['magic'] || 'Not selected'}}) <div class="clear yellow" ng-click="clear_magic_selection()">x</div></h2>
+            <div class="full_row">
+              <div ng-repeat="mage in magic" 
+                   ng-magic="{{mage.label}}" 
+                   class="row" 
+                   ng-priorities="{{mage.priorities}}">
+              {{mage.label}} 
+              <div class="corners"></div>
+              </div>  
+            </div>
+          </div>
+        </div>
+      </div>
 
-          <div class="summary_block">
-            <div ng-repeat="attribute in my_attributes" 
-                 ng-hide="attribute.type === 'special'"
-                 ng-attribute>
+      <div class="basics_container">
 
+        <div class="section_toggle yellow" ng-model="hide_stats" ng-click="hide_stats=!hide_stats">Toggle Stats</div>
+        <div class="row_container basics" ng-hide="hide_stats">
+          <div class="summary_container" ng-stat>
+            <h2>Racial Modifiers</h2>
+
+            <div class="summary_block">
+              <span ng-bind="my_racials || 'None'"></span>
+            </div>
+
+            <h2>Attributes ({{stat_points.current}} Points Remaining)</h2>
+
+            <div class="summary_block">
+              <div ng-repeat="attribute in my_attributes" 
+                   ng-hide="attribute.type === 'special'"
+                   ng-attribute>
+
+                <div class="list-item">
+                  <div class="item">
+                    {{attribute.label}}
+                  </div>
+                  <div class="rank">
+                    {{attribute.current}} / {{attribute.maximum}}
+                  </div>
+                  <div class="controls">
+                    <span ng-click="increase_attribute(attribute)" class="add">+</span>
+                    <span ng-click="decrease_attribute(attribute)" class="sub">-</span>
+                  </div>
+                </div>        
+              </div>
+            </div>
+          </div>
+
+  		  	<div class="summary_container">
+            <h2>Specials ({{race_points.current}} Points Remaining)</h2>
+
+            <div class="summary_block">
+              <div ng-repeat="attribute in my_attributes" 
+                 ng-hide="attribute.type !== 'special'"
+                 ng-special>
+                <div class="list-item">
+                  <div class="item">
+                    {{attribute.label}}
+                  </div>
+                  <div class="rank">
+                    {{attribute.current}} / {{attribute.maximum}}
+                  </div>
+                  <div class="controls">
+                    <span ng-click="increase_attribute(attribute)" class="add">+</span>
+                    <span ng-click="decrease_attribute(attribute)" class="sub">-</span>
+                  </div>
+                </div>        
+              </div>
               <div class="list-item">
-                <div class="item">
-                  {{attribute.label}}
-                </div>
-                <div class="rank">
-                  {{attribute.current}} / {{attribute.maximum}}
-                </div>
-                <div class="controls">
-                  <span ng-click="increase_attribute(attribute)" class="add">+</span>
-                  <span ng-click="decrease_attribute(attribute)" class="sub">-</span>
-                </div>
-              </div>        
+                <div class="item">Essence</div>
+                <div class="rank" ng-bind="get_stats('essence')"></div>
+              </div>
             </div>
-          </div>
-        </div>
 
-		  	<div class="summary_container">
-          <h2>Specials ({{race_points.current}} Points Remaining)</h2>
+            <h2>Initiative</h2>
 
-          <div class="summary_block">
-            <div ng-repeat="attribute in my_attributes" 
-               ng-hide="attribute.type !== 'special'"
-               ng-special>
+            <div class="summary_block">
               <div class="list-item">
-                <div class="item">
-                  {{attribute.label}}
-                </div>
-                <div class="rank">
-                  {{attribute.current}} / {{attribute.maximum}}
-                </div>
-                <div class="controls">
-                  <span ng-click="increase_attribute(attribute)" class="add">+</span>
-                  <span ng-click="decrease_attribute(attribute)" class="sub">-</span>
-                </div>
+                <div class="item">Physical / Rigging / Matrix</div>
+                <div class="rank" ng-bind="get_initiative('physical')"></div>
+              </div>
+              <div class="list-item">
+                <div class="item">Astral</div>
+                <div class="rank" ng-bind="get_initiative('astral')"></div>
+              </div>
+              <div class="list-item">
+                <div class="item">VR Hot</div>
+                <div class="rank" ng-bind="get_initiative('vrhot')"></div>
+              </div>
+              <div class="list-item">
+                <div class="item">VR Cold</div>
+                <div class="rank" ng-bind="get_initiative('vrcold')"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary_container"> 
+            <h2>Stats</h2>
+
+            <div class="summary_block">
+              <div class="list-item">
+                <div class="item">Physical Limit</div>
+                <div class="rank" ng-bind="get_stats('physical')"></div>
+              </div>
+              <div class="list-item">
+                <div class="item">Mental Limit</div>
+                <div class="rank" ng-bind="get_stats('mental')"></div>
+              </div>
+              <div class="list-item">
+                <div class="item">Social Limit</div>
+                <div class="rank" ng-bind="get_stats('social')"></div>
+              </div>
+            </div>
+
+            <div class="summary_block">
+
+            </div>
+            <div class="summary_block">
+              <div class="list-item">
+                <div class="item">Composure</div>
+                <div class="rank" ng-bind="get_stats('composure')"></div>
+              </div>
+              <div class="list-item">
+                <div class="item">Judge Intentions</div>
+                <div class="rank" ng-bind="get_stats('judge')"></div>
+              </div>
+              <div class="list-item">
+                <div class="item">Memory</div>
+                <div class="rank" ng-bind="get_stats('memory')"></div>
+              </div>
+            </div>
+            <div class="summary_block">
+              <div class="list-item">
+                <div class="item">Lift / Carry</div>
+                <div class="rank" ng-bind="get_stats('strength')"></div>
+              </div>
+              <div class="list-item">
+                <div class="item">Walk / Run</div>
+                <div class="rank" ng-bind="get_stats('speed')"></div>
               </div>        
-            </div>
-            <div class="list-item">
-              <div class="item">Essence</div>
-              <div class="rank" ng-bind="get_stats('essence')"></div>
-            </div>
-          </div>
-
-          <h2>Initiative</h2>
-
-          <div class="summary_block">
-            <div class="list-item">
-              <div class="item">Physical / Rigging / Matrix</div>
-              <div class="rank" ng-bind="get_initiative('physical')"></div>
-            </div>
-            <div class="list-item">
-              <div class="item">Astral</div>
-              <div class="rank" ng-bind="get_initiative('astral')"></div>
-            </div>
-            <div class="list-item">
-              <div class="item">VR Hot</div>
-              <div class="rank" ng-bind="get_initiative('vrhot')"></div>
-            </div>
-            <div class="list-item">
-              <div class="item">VR Cold</div>
-              <div class="rank" ng-bind="get_initiative('vrcold')"></div>
-            </div>
-          </div>
-
-        </div>
-
-
-        <div class="summary_container"> 
-          <h2>Stats</h2>
-
-          <div class="summary_block">
-            <div class="list-item">
-              <div class="item">Physical Limit</div>
-              <div class="rank" ng-bind="get_stats('physical')"></div>
-            </div>
-            <div class="list-item">
-              <div class="item">Mental Limit</div>
-              <div class="rank" ng-bind="get_stats('mental')"></div>
-            </div>
-            <div class="list-item">
-              <div class="item">Social Limit</div>
-              <div class="rank" ng-bind="get_stats('social')"></div>
-            </div>
-          </div>
-
-          <div class="summary_block">
-
-          </div>
-          <div class="summary_block">
-            <div class="list-item">
-              <div class="item">Composure</div>
-              <div class="rank" ng-bind="get_stats('composure')"></div>
-            </div>
-            <div class="list-item">
-              <div class="item">Judge Intentions</div>
-              <div class="rank" ng-bind="get_stats('judge')"></div>
-            </div>
-            <div class="list-item">
-              <div class="item">Memory</div>
-              <div class="rank" ng-bind="get_stats('memory')"></div>
-            </div>
-          </div>
-          <div class="summary_block">
-            <div class="list-item">
-              <div class="item">Lift / Carry</div>
-              <div class="rank" ng-bind="get_stats('strength')"></div>
-            </div>
-            <div class="list-item">
-              <div class="item">Walk / Run</div>
-              <div class="rank" ng-bind="get_stats('speed')"></div>
-            </div>        
-            <div class="list-item">
-              <div class="item">Physical / Stun Damage</div>
-              <div class="rank" ng-bind="get_stats('damage')"></div>
+              <div class="list-item">
+                <div class="item">Physical / Stun Damage</div>
+                <div class="rank" ng-bind="get_stats('damage')"></div>
+              </div>
             </div>
           </div>
         </div>
+
+        <div class="section_toggle yellow" ng-model="hide_skills" ng-click="hide_skills=!hide_skills">Toggle Skills</div>
+    	  <div class="row_container skills" ng-hide="hide_skills" skills-section>
+    	  	<div class="summary_container">
+    	  		<h2>Skills ({{skill_points.single}} Skill Points / {{skill_points.group}} Group Points Remaining)</h2>
+            <my-table rows='skills_col_1'></my-table>
+          </div>
+          <div class="summary_container">
+            <h2> </h2>
+            <my-table rows='skills_col_2'></my-table>
+      		</div>
+      	</div>
       </div>
-
-	  <div class="row_container skills" skills-section>
-	  	<div class="summary_container">
-	  		<h2>Skills ({{skill_points.single}} Skill Points / {{skill_points.group}} Group Points Remaining)</h2>
-        <my-table rows='skills_col_1'></my-table>
-      </div>
-      <div class="summary_container">
-        <h2> </h2>
-        <my-table rows='skills_col_2'></my-table>
-  		</div>
-  	</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
     </div>
     <script type="text/javascript" src="lib/jquery-2.1.0.min.js"></script>
     <script type="text/javascript" src="lib/angular.min.js"></script>
