@@ -149,56 +149,56 @@ var data_skills = {
 
 var skills_col_1 = [
     { category: 'Combat', groups: [
-        { name: 'Misc', skills: [
+        { name: 'Misc', id: 1000, skills: [
               {name: 'Archery', id: 0, attribute: 'Agi'},
               {name: 'Exotic Melee Weapon', id: 1, attribute: 'Agi'}, 
               {name: 'Exotic Ranged Weapon', id: 2, attribute: 'Agi'}, 
               {name: 'Heavy Weapons', id: 3, attribute: 'Agi'}, 
               {name: 'Throwing Weapons', id: 4, attribute: 'Agi'} ]},
-        { name: 'Close Combat', skills: [
+        { name: 'Close Combat', id: 1001, skills: [
               {name: 'Blades', id: 5, attribute: 'Agi'}, 
               {name: 'Clubs', id: 6, attribute: 'Agi'}, 
               {name: 'Unarmed', id: 7, attribute: 'Agi'}
               ]},
-        { name: 'Firearms', skills: [
+        { name: 'Firearms', id: 1002, skills: [
               {name: 'Automatics', id: 8, attribute: 'Agi'}, 
               {name: 'Long Arms', id: 9, attribute: 'Agi'}, 
               {name: 'Pistols', id: 10, attribute: 'Agi'}]}
       ] 
     },
     { category: 'Social', groups: [
-      { name: 'Misc', skills: [
+      { name: 'Misc', id: 1003, skills: [
               {name: 'Animal Handling', id: 23, attribute: 'Cha'}, 
               {name: 'Instruction', id: 24, attribute: 'Cha'}, 
               {name: 'Intimidation', id: 25, attribute: 'Cha'}]},
-      { name: 'Acting', skills: [
+      { name: 'Acting', id: 1004, skills: [
               {name: 'Con', id: 26, attribute: 'Cha'}, 
               {name: 'Impersonation', id: 27, attribute: 'Cha'}, 
               {name: 'Performance', id: 28, attribute: 'Cha'}]},
-      { name: 'Influence', skills: [
+      { name: 'Influence', id: 1005, skills: [
               {name: 'Etiquette', id: 29, attribute: 'Cha'}, 
               {name: 'Leadership', id: 30, attribute: 'Cha'}, 
               {name: 'Negotiation', id: 31, attribute: 'Cha'}]}
      ]
     },
     { category: 'Science / Technical', groups: [
-      { name: 'Misc', skills: [
+      { name: 'Misc', id: 1006, skills: [
               {name: 'Armorer', id: 46, attribute: 'Log'}, 
               {name: 'Artisan', id: 47, attribute: 'Int'}, 
               {name: 'Chemistry', id: 48, attribute: 'Log'}, 
               {name: 'Demolitions', id: 49, attribute: 'Log'},
               {name: 'Forgery', id: 50, attribute: 'Log'}, 
               {name: 'Locksmith', id: 51, attribute: 'Agi'}]},
-      { name: 'Biotech', skills: [
+      { name: 'Biotech', id: 1007, skills: [
               {name: 'Biotechnology', id: 52, attribute: 'Log'}, 
               {name: 'Cybertechnology', id: 53, attribute: 'Log'}, 
               {name: 'First Aid', id: 54, attribute: 'Log'}, 
               {name: 'Medicine', id: 55, attribute: 'Log'}]},
-      { name: 'Cracking', skills: [
+      { name: 'Cracking', id: 1008, skills: [
               {name: 'Cybercombat', id: 56, attribute: 'Log'}, 
               {name: 'Electronic Warfare', id: 57, attribute: 'Log'}, 
               {name: 'Hacking', id: 58, attribute: 'Log'}]},
-      { name: 'Electronics', skills: [
+      { name: 'Electronics', id: 1009, skills: [
               {name: 'Computers', id: 59, attribute: 'Log'}, 
               {name: 'Hardware', id: 60, attribute: 'Log'}, 
               {name: 'Software', id: 61, attribute: 'Log'}]}
@@ -208,20 +208,20 @@ var skills_col_1 = [
 
 var skills_col_2 = [
     { category: 'Physical', groups: [
-        { name: 'Misc', skills: [
+        { name: 'Misc', id: 1010, skills: [
               {name: 'Diving', id: 11, attribute: 'Bod'}, 
               {name: 'Escape Artist', id: 12, attribute: 'Agi'}, 
               {name: 'Free-Fall', id: 13, attribute: 'Bod'}, 
               {name: 'Perception', id: 14, attribute: 'Int'}]},
-        { name: 'Athletics', skills: [
+        { name: 'Athletics', id: 1011, skills: [
               {name: 'Gymnastics', id: 15, attribute: 'Agi'}, 
               {name: 'Running', id: 16, attribute: 'Str'}, 
               {name: 'Swimming', id: 17, attribute: 'Str'}]},
-        { name: 'Outdoors', skills: [
+        { name: 'Outdoors', id: 1012, skills: [
               {name: 'Navigation', id: 18, attribute: 'Int'}, 
               {name: 'Survival', id: 19, attribute: 'Wil'}, 
               {name: 'Tracking', id: 20, attribute: 'Int'}]},
-        { name: 'Stealth', skills: [ 
+        { name: 'Stealth', id: 1013, skills: [ 
               {name: 'Disguise', id: 21, attribute: 'Int'}, 
               {name: 'Palming', id: 22, attribute: 'Agi'}, 
               {name: 'Sneaking', id: 23, attribute: 'Agi'}]}
@@ -229,7 +229,7 @@ var skills_col_2 = [
       ] 
     },
     { category: 'Vehicles', groups: [
-        { name: 'Misc', skills: [
+        { name: 'Misc', id: 1014, skills: [
               {name: 'Gunnery', id: 35, attribute: 'Agi'}, 
               {name: 'Pilot Aerospace', id: 36, attribute: 'Rea'}, 
               {name: 'Pilot Aircraft', id: 37, attribute: 'Rea'}, 
@@ -237,7 +237,7 @@ var skills_col_2 = [
               {name: 'Pilot Ground Craft', id: 39, attribute: 'Rea'}, 
               {name: 'Pilot Walker', id: 40, attribute: 'Rea'}, 
               {name: 'Pilot Water Craft', id: 41, attribute: 'Rea'}]},
-        { name: 'Engineering ', skills: [
+        { name: 'Engineering ', id: 1015, skills: [
               {name: 'Aeronautic Mechanics', id: 42, attribute: 'Log'}, 
               {name: 'Automotive Mechanics', id: 43, attribute: 'Log'}, 
               {name: 'Industrial Mechanics', id: 44, attribute: 'Log'}, 
@@ -245,23 +245,23 @@ var skills_col_2 = [
       ] 
     },
     { category: 'Magic & Resonance', groups: [
-      { name: 'Misc', skills: [
+      { name: 'Misc', id: 1016, skills: [
               {name: 'Arcane', id: 62, attribute: 'Magic'}, 
               {name: 'Assensing', id: 63, attribute: 'Magic'}, 
               {name: 'Astral Combat', id: 64, attribute: 'Magic'}]},
-      { name: 'Conjuring', skills: [
+      { name: 'Conjuring', id: 1017, skills: [
               {name: 'Banishing', id: 65, attribute: 'Magic'}, 
               {name: 'Binding', id: 66, attribute: 'Magic'}, 
               {name: 'Summoning', id: 67, attribute: 'Magic'}]},
-      { name: 'Enchanting', skills: [
+      { name: 'Enchanting', id: 1018, skills: [
               {name: 'Alchemy', id: 68, attribute: 'Magic'}, 
               {name: 'Artificing', id: 69, attribute: 'Magic'}, 
               {name: 'Disenchanting', id: 70, attribute: 'Magic'}]},
-      { name: 'Sorcery', skills: [
+      { name: 'Sorcery', id: 1019, skills: [
               {name: 'Counterspelling', id: 71, attribute: 'Magic'}, 
               {name: 'Ritual Spellcasting', id: 72, attribute: 'Magic'}, 
               {name: 'Spellcasting', id: 73, attribute: 'Magic'}]},
-      { name: 'Tasking', skills: [
+      { name: 'Tasking', id: 1020, skills: [
               {name: 'Compiling', id: 32, attribute: 'Reson'}, 
               {name: 'Decompiling', id: 33, attribute: 'Reson'}, 
               {name: 'Registering', id: 34, attribute: 'Reson'}]}

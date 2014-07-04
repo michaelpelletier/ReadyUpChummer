@@ -263,7 +263,6 @@ h2 {
 /* List Items */
 .list-item {
 	color: #607A7E;
-	padding-bottom: 5px;
 }
 
 .list-item:hover {
@@ -296,12 +295,29 @@ h2 {
 	margin-left: 20px;
 }
 
+.skill_group .skill {
+	margin-left: 10px;
+}
+
 .skill_specialty {
 	margin-left: 10px;
 }
 
-.skill_name {
+.group_name {
 	display: inline-block;
+	margin-bottom: 5px;
+	width: 304px;
+}
+
+.ranks.group {
+	display: inline-block;
+	width: 106px;
+}
+
+.skill_name {
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 5px;
 	width: 235px;
 }
 

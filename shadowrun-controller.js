@@ -306,22 +306,17 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
   // Skills
   $scope.add_skill_rank = function(skill_id, ability) {
-
     if ($scope.skill_points.single > 0) {
-      if (!$scope.my_skills[skill_id]) {
-        $scope.my_skills[skill_id] = {};
-        $scope.my_skills[skill_id]['ranks'] = 0;
-        $scope.my_skills[skill_id]['attribute'] = 0;
-      } 
 
-      if ($scope.my_skills[skill_id].ranks === '') {
-        $scope.my_skills[skill_id].ranks = 0;
-      } 
-
-      if ($scope.my_skills[skill_id].ranks < 6) {
-        $scope.my_skills[skill_id].ranks += 1;
-        $scope.my_skills[skill_id].attribute = ability;
-        $scope.skill_points.single -= 1;
+      if ($('[data-id="' + skill_id + '"]').siblings('.ranks.group').text() > 0) {
+      // Group has ranks in it.
+      } else {
+        $scope.increase_skill_rank(skill_id);
+        if ($scope.my_skills[skill_id].ranks < 6) {
+          $scope.my_skills[skill_id].ranks += 1;
+          $scope.my_skills[skill_id].attribute = ability;
+          $scope.skill_points.single -= 1;
+        }
       }
     }
   }
@@ -329,26 +324,98 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   $scope.remove_skill_rank = function(skill_id) {
     var skill = $scope.my_skills[skill_id]
 
-    if (skill) {
-      if (skill.ranks > 0) {
-       skill.ranks -= 1;
-       $scope.skill_points.single += 1;
+    if ($('[data-id="' + skill_id + '"]').siblings('.ranks.group').text() > 0) {
+    // Group has ranks in it.
+    } else {
+      if (skill) {
+        if (skill.ranks > 0) {
+         skill.ranks -= 1;
+         $scope.skill_points.single += 1;
 
-        if (skill.ranks === 0) {
-          skill.ranks = '';
+          if (skill.ranks === 0) {
+            skill.ranks = '';
 
-          var skill_points = $('[data-id="' + skill_id + '"]').parent().find('.skill_specialty').length
-          console.log(skill_points)
-
-          $('[data-id="' + skill_id + '"]').parent().find('.skill_specialty').each(function() {
-            $scope.skill_points.single += 1;
-            $(this).remove();
-          });
-
+            var skill_points = $('[data-id="' + skill_id + '"]').find('.skill_specialty').length
+            $('[data-id="' + skill_id + '"]').find('.skill_specialty').each(function() {
+              $scope.skill_points.single += 1;
+              $(this).remove();
+            });
+          }
         }
       }
     }
   }
+
+  $scope.increase_skill_rank = function(skill_id) {
+    if (!$scope.my_skills[skill_id]) {
+      $scope.my_skills[skill_id] = {};
+      $scope.my_skills[skill_id]['ranks'] = 0;
+      $scope.my_skills[skill_id]['attribute'] = 0;
+    } 
+
+    if ($scope.my_skills[skill_id].ranks === '') {
+      $scope.my_skills[skill_id].ranks = 0;
+    } 
+  }
+
+  $scope.add_group_rank = function(group_id) {
+    if ($scope.skill_points.group > 0) {
+      if (!$scope.my_skills[group_id]) {
+        $scope.my_skills[group_id] = {};
+        $scope.my_skills[group_id]['ranks'] = 0;
+      } 
+
+      if ($scope.my_skills[group_id].ranks === '') {
+        $scope.my_skills[group_id].ranks = 0;
+      } 
+
+      if ($scope.my_skills[group_id].ranks < 6) {
+        $scope.my_skills[group_id].ranks += 1;
+        $scope.skill_points.group -= 1;
+      }
+
+      $('[data-id="' + group_id + '"]').find('.list-item.skill').each(function() {
+        var skill_id = $(this).attr('data-id');
+        var ability = $(this).attr('data-attribute');
+
+        $scope.increase_skill_rank(skill_id);
+        if ($scope.my_skills[skill_id].ranks < 6) {
+          $scope.my_skills[skill_id].ranks += 1;
+          $scope.my_skills[skill_id].attribute = ability;
+        }
+      });
+    }
+  }
+
+  $scope.remove_group_rank = function(group_id) {
+    var group = $scope.my_skills[group_id]
+
+    if (group) {
+      if (group.ranks > 0) {
+       group.ranks -= 1;
+       $scope.skill_points.group += 1;
+
+        if (group.ranks === 0) {
+          group.ranks = '';
+        }
+
+        $('[data-id="' + group_id + '"]').find('.list-item.skill').each(function() {
+          var skill_id = $(this).attr('data-id');
+          $scope.my_skills[skill_id].ranks -= 1;
+
+          if ($scope.my_skills[skill_id].ranks === 0) {
+            $scope.my_skills[skill_id].ranks = '';
+          }
+
+        });
+
+      }
+    }
+  }
+
+
+
+
 
   $scope.get_dice_pool = function(skill_id) {
     if ($scope.my_skills[skill_id]) {
@@ -370,7 +437,7 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   }
 
   $scope.add_specialty = function(skill) {
-    var skill_ranks = $('[data-id="' + skill + '"]').siblings('.ranks').text();
+    var skill_ranks = $('[data-id="' + skill + '"]').find('.ranks').text();
     if (skill_ranks > 0) {
       if ($scope.skill_points.single > 0) {
         $scope.skill_points.single -= 1;
