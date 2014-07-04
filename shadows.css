@@ -38,13 +38,13 @@ h2 {
 .col.magic 			{ width: 488px;	}
 .col.skills 		{ width: 65px; }
 .col.explain 		{	width: 45px;	}
-.col.resources	{ width: 80px; }
+.col.resources	{ width: 82px; }
 
 .priority_row {
 	color: #FFF;
 	font-size: 12px;
 	margin: 5px 0px;
-	padding: 14px 10px;
+	padding: 14px 5px;
 }
 
 .priority_row.choose_default {
