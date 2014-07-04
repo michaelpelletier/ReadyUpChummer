@@ -219,9 +219,10 @@ h2 {
 .controls span {
 	display: inline-block;
 	font-size: 18px;
-	min-width: 10px;
+	height: 14px;
 	text-align: center;
 	vertical-align: top;
+	width: 10px;
 }
 
 .controls .add { line-height: 14px; }
@@ -231,9 +232,11 @@ h2 {
 	cursor: pointer;
 	display: inline-block;
 	font-size: 14px;
+	height: 14px;
 	margin-left: 5px;
 	position: relative;
 	text-align: center;
+	width: 10px;
 }
 
 
@@ -263,6 +266,7 @@ h2 {
 /* List Items */
 .list-item {
 	color: #607A7E;
+	min-height: 18px;
 }
 
 .list-item:hover {
