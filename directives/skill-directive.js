@@ -1,5 +1,5 @@
 Shadowrun.Directives.directive('skillsSection', function ($compile) {
-return {
+  return {
     link: function (scope, element, attrs) {
       scope.$on('priority_change', function(event, row, column) {
         var skill_priority = scope.priorities['skills'];
@@ -73,28 +73,42 @@ Shadowrun.Directives.directive('myTable', function ($compile) {
             // Only render if Group exists.
             if (group.name !== "Misc") {
               html += '<div class="list-item skill_group" data-id="' + group.id + '">';
-              html += '<span class="yellow group_name">' + group.name + '</span>';
-              html += '<span class="ranks group" ng-bind="my_skills.' + group.id + '.ranks"></span>';
-              html += '<div class="controls">';
-              html += '<span ng-click="add_group_rank(' + group.id + ')" class="add">+</span>';
-              html += '<span ng-click="remove_group_rank(' + group.id + ')" class="sub">-</span>';
-              html += '</div>';
+              html +=   '<span class="yellow group_name">';
+              html +=     group.name;
+              html +=   '</span>';
+              html +=   '<span class="ranks group" ng-bind="my_skills.' + group.id + '.ranks">';
+              html +=   '</span>';
+              html +=   '<div class="controls">';
+              html +=     '<span ng-click="add_group_rank(' + group.id + ')" class="add">+</span>';
+              html +=     '<span ng-click="remove_group_rank(' + group.id + ')" class="sub">-</span>';
+              html +=   '</div>';
             }
 
             if ('skills' in group) {
               angular.forEach(group.skills, function (skill, index) {
                 var attributes = "'" + skill.attribute + "'";
                 var skill_information = skill.id + "," + attributes;
-                html += '<div class="list-item skill" data-id="' + skill.id + '" data-attribute="' + skill.attribute + '" ><span class="skill_name" ng-click="add_specialty(' + skill.id + ')" title="Click to add Specialty">' + skill.name + '</span>';
-                html += '<span class="dice_pool" ng-bind="get_dice_pool(' + skill.id + ')"></span>';
-                html += '<span class="ranks" ng-bind="my_skills.' + skill.id + '.ranks"></span>';
-                html += '<span class="attribute"><span ng-bind="my_attributes[' + attributes + '].current"></span> (' + skill.attribute + ')</span>';
-                html +=  '<div class="controls"><span ng-click="add_skill_rank(' + skill_information + ')" class="add">+</span><span ng-click="remove_skill_rank(' + skill.id + ')" class="sub">-</span></div></div>';
+
+                html += '<div class="list-item skill" data-id="' + skill.id + '" data-attribute="' + skill.attribute + '" >';
+                html +=   '<span class="skill_name" ng-click="add_specialty(' + skill.id + ')" title="Click to add Specialty">';
+                html +=     skill.name;
+                html +=   '</span>';
+                html +=   '<span class="dice_pool" ng-bind="get_dice_pool(' + skill.id + ')"></span>';
+                html +=   '<span class="ranks" ng-bind="my_skills.' + skill.id + '.ranks"></span>';
+                html +=   '<span class="attribute">';
+                html +=     '<span ng-bind="my_attributes[' + attributes + '].current"></span>'; 
+                html +=     '(' + skill.attribute + ')';
+                html +=   '</span>';
+                html +=   '<div class="controls">';
+                html +=     '<span ng-click="add_skill_rank(' + skill_information + ')" class="add">+</span>';
+                html +=     '<span ng-click="remove_skill_rank(' + skill.id + ')" class="sub">-</span>';
+                html +=   '</div>';
+                html += '</div>';
               });
             }
 
             if (group.name !== "Misc") {
-              html += '</div>';
+              html +=  '</div>';
             }
 
           });
