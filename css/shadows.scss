@@ -1,0 +1,644 @@
+/* General Stuff */
+body {
+	background: #000;
+	font-family: "arial", "verdana";
+	margin: 0px;
+}
+
+.app_container {
+	margin: 0 auto;
+	width: 900px;
+}
+
+h2 {
+	color: #FFF;
+	font-size: 12px;
+}
+
+/* Main Navigation */
+.navigation {
+	.row {
+		display: inline-block;
+		text-decoration: none;
+		width: 60px;
+
+		&.about {
+			float: right;
+		}
+
+		&:after {
+			border-bottom: 15px solid #000;
+		}
+	}
+}
+
+/* =====================================
+   						GENERAL CONTAINERS 
+   ===================================== */
+
+.row_container {
+	background: #153335;
+	clear: both;
+	font-size: 12px;
+	margin-bottom: 10px;
+	opacity: 0.8;
+
+	&:after {
+		clear: both;
+		content: ".";
+		display: block;
+		height: 0;
+		visibility: hidden;
+	}
+
+	.row {
+		display: inline-block;
+		margin: 0px 2px;
+	}
+}
+
+.summary_container {
+	display: inline-block;
+	float: left;
+	font-size: 13px;
+	width: 300px;
+	vertical-align: top;
+
+	h2 {
+		background: #1B4B4F;
+		margin-top: 0px;
+		min-height: 14px;
+		padding: 5px;
+		vertical-align: top;
+	}
+}
+
+.summary_block {
+	color: #607A7E;
+	padding: 0px 10px 10px 10px;
+}
+
+/* =====================================
+   							PRIORITIES 
+   ===================================== */
+
+.priorities {
+	background: #0E1110;
+	border: 2px solid #4285B7;
+	border-radius: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 10px;
+  position: relative;
+  width: 876px; /* Plus borders and padding makes 900 */
+
+  h2 {
+  	height: 16px;
+  }
+
+	.row_container {
+		background: transparent;
+		opacity: 1;
+	}
+}
+
+.col {
+  display: inline-block;
+  margin: 0px 1px;
+  vertical-align: top;
+}
+
+.col.metatype 	{ width: 85px; }
+.col.stats 			{ width: 75px; }
+.col.magic 			{ width: 488px;	}
+.col.skills 		{ width: 65px; }
+.col.explain 		{	width: 45px;	}
+.col.resources	{ width: 82px; }
+
+.priority_row {
+	color: #FFF;
+	font-size: 12px;
+	margin: 5px 0px;
+	padding: 14px 5px;
+
+	&.choose_default {
+		height: 14px;
+	}
+}
+
+/* Rows */
+.row {
+	background: #1B2526;
+	border-top: 2px solid #3d5658;
+	border-left: 1px solid #3d5658;
+	border-bottom: 2px solid #3d5658;
+	border-right: 1px solid #3d5658;
+	color: #40898F;
+	cursor: pointer;
+	font-size: 13px;
+	line-height: 18px;
+	margin: 5px 0px;
+	padding: 10px;
+	position: relative;
+	text-align: center;
+
+	&:hover {
+		background: #3d5658;
+		color: #000;
+	}
+
+
+	&.disabled {
+		background: #333;
+		border-color: #333333;
+		color: #969696;
+		cursor: default;
+
+		.yellow {
+			color: #666666;
+		}
+
+		&.selected {
+			.yellow {
+				color: #DFDD4B;
+			}
+		}
+
+		&:before { 
+			border-bottom: 15px solid #333333;
+		}
+
+		.corners:before {	
+			border-top: 15px solid #333333;
+		}
+	}
+
+	&.selected {
+		background: transparent; 
+		border-color: #4285B7;	
+		color: #4285B7; 
+		cursor: default;
+
+		.corners:before {
+			border-top: 15px solid #4285B7;
+		}
+
+		&:before {
+			border-bottom: 15px solid #4285B7;
+		}
+
+		&.disabled {
+			background: transparent;
+			border-color: #4285B7;	
+			color: #4285B7; 
+			cursor: default;
+
+			.yellow {
+				color: #666666;
+			}
+		}
+	}
+
+	&.error {
+		background: transparent; 
+		border-color: #AF012C;	
+		color: #AF012C; 
+
+		.corners:before {	
+			border-top: 15px solid #AF012C;
+		}
+
+		&:before { 
+			border-bottom: 15px solid #AF012C;
+		}
+
+		&.selected {
+			background: transparent; 
+			border-color: #AF012C;	
+			color: #AF012C; 
+
+			.corners:before {	
+				border-top: 15px solid #AF012C;
+			}
+
+			&:before { 
+				border-bottom: 15px solid #AF012C;
+			}
+		}
+	}
+}
+
+/* Special Styling for Borders */
+.corners:before {
+	position: absolute;
+	right: -1px;
+	top: -1px;
+	content: '';
+	border-top: 15px solid #3d5658;
+	border-left: 15px solid transparent;
+}
+
+
+.corners:after {
+	position: absolute;
+	right: -2px;
+	top: -2px;
+	content: '';
+	border-top: 15px solid #0E1110;
+	border-left: 15px solid transparent;
+}
+
+.row:before {
+	position: absolute;
+	left: -1px;
+	bottom: -1px;
+	content: '';
+	border-bottom: 15px solid #3d5658;
+	border-right: 15px solid transparent;
+}
+
+.row:after {
+	position: absolute;
+	left: -2px;
+	bottom: -2px;
+	content: '';
+	border-bottom: 15px solid #0E1110;
+	border-right: 15px solid transparent;
+}
+
+/* Priority Labels */
+.priority_row {
+	&.row_A { height: 86px; }
+	&.row_B { height: 86px; }
+	&.row_C { height: 68px; }
+	&.row_D { height: 32px; }
+	&.row_E { height: 14px; }
+}
+
+.row_A,
+.row_B { 
+	height: 90px;
+
+	span { line-height: 90px; }
+}
+
+.row_C { 
+	height: 72px;
+
+	span { line-height: 72px; }
+}
+
+.row_D { 
+	height: 36px;
+
+	span { line-height: 36px; }
+}
+
+.row_E { 
+	height: 18px;
+
+	span { line-height: 18px; }
+}
+
+/* Bug Fix for Magic Users */
+.col.magic .row {
+	text-align: left;
+}
+
+.col.magic .row span.yellow {
+	line-height: 14px;
+}
+
+/* Metatype and Magic */
+.container {
+	display: inline-block;
+	float: left;
+	margin-left: 0px;
+	margin-right: 0px;
+
+	.row {
+		margin: 2px;
+	}
+
+	&.metatype {
+		margin-left: 10px;
+		width: 362px;
+
+		.row {
+			min-width: 35px;
+
+			&.disabled {
+				min-width: 42px;
+			}
+		}
+	}
+}
+
+/* =====================================
+   					LISTS FOR STATS 
+   ===================================== */
+
+.list-item {
+	color: #607A7E;
+	min-height: 18px;
+
+	&:hover {
+		color: #FFF;
+		cursor: default;
+	}
+}
+
+.item {
+	display: inline-block;
+	width: 180px;
+}
+
+.rank {
+	display: inline-block;
+	text-align: center;
+	width: 65px;
+}
+
+.summary_container.limits .item {
+	width: 210px;
+}
+
+/* =====================================
+   								SKILLS 
+   ===================================== */
+
+
+.skill_category {
+	padding-bottom: 10px;
+}
+
+.skill {
+	margin-left: 20px;
+
+	.dice_pool,
+	.ranks {
+		display: inline-block;
+		margin-right: 25px;
+		text-align: center;
+		width: 25px;
+	}
+
+	 .attribute {
+		display: inline-block;
+		margin-right: 10px;
+		text-align: center;
+		width: 55px;
+	}
+}
+
+.skill_name {
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 5px;
+	width: 235px;
+}
+
+/* Specialties */
+.skill_specialty {
+	margin-left: 10px;
+
+	.skill_name {
+		width: 225px;
+	}
+
+	.clear {
+		font-size: 12px;
+	}
+
+	input {
+		background: transparent;
+		border: 0px;
+		color: #607A7E;
+		font-size: 12px;
+		outline: 0px;
+		padding: 0px;
+		width: 200px;
+
+		&:focus {
+			color: #FFF;
+		}
+	}
+}
+
+/* Groups */
+.group_name {
+	display: inline-block;
+	margin-bottom: 5px;
+	width: 304px;
+}
+
+.ranks.group {
+	display: inline-block;
+	width: 106px;
+}
+
+.skill_group {
+	margin-left: 10px;
+	padding-top: 10px;
+
+	.skill {
+		margin-left: 10px;
+	}
+}
+
+.row_container.skills .summary_container {
+	font-size: 12px;
+	width: 450px;
+}
+
+/* Labels */
+.labels {
+	display: inline-block;
+	float: right;
+	margin-right: 30px;
+	text-align: right;
+	width: 200px;
+}
+
+.label {
+	&.dice 	{ margin-right: 20px; }
+	&.ranks	{ margin-right: 13px; }
+}
+
+
+/* =====================================
+   						QUALITIES 
+   ===================================== */
+
+.my_qualities {
+	display: inline-block;
+	float: left;
+	vertical-align: top;
+	width: 290px;
+
+	h2 {
+		background: #1B4B4F;
+		margin-top: 0px;
+		min-height: 14px;
+		padding: 5px;
+		vertical-align: top;
+	}
+
+	.summary_container {
+		margin-bottom: 5px;
+		width: 290px;
+	}
+}
+
+.list_qualities {
+	display: inline-block;
+	width: 610px;
+
+	.summary_container {
+		color: #607A7E;
+		margin-bottom: 5px;
+		width: 340px;
+	}
+}
+
+.qualities_container {
+	padding-left: 10px;
+}
+
+.summary_container.qualities {
+	width: 270px;
+}
+
+.quality_item {
+	display: inline-block;
+	font-size: 12px;
+	height: 14px;
+	margin: 3px 0px;
+	position: relative;
+	vertical-align: top;
+	width: 100%;
+}
+
+.quality_name {
+	color: #FFF;
+	cursor: pointer;
+}
+
+.quality_hover {
+	background: #1B4B4F;
+	display: block;
+	font-size: 12px;
+	padding: 10px;
+	position: absolute;
+	width: 250px;
+	z-index: 100;
+	box-shadow: 3px 3px 1px rgba(20,20,20,0.8);
+
+	.name {
+		color: #DFDD4B;
+		font-weight: bold;
+	}
+
+	.cost {
+		color: #607A7E;
+		font-weight: bold;
+	}
+
+	.description {
+		color: #FFF;
+	}
+}
+
+.rating_labels {
+	display: inline-block;
+}
+
+.quality_mine { 
+	color: #607A7E;
+	cursor: pointer;
+	font-size: 12px;
+	line-height: 14px;
+	margin: 5px 10px;
+	vertical-align: top;
+}
+
+.level_rating {
+	color: #FFF;
+	cursor: pointer;
+	display: inline-block;
+	margin: 0 2px;
+}
+
+/* =====================================
+   					LINKS AND GENERIC 
+   ===================================== */
+
+.hidden {
+	display: none!important;
+}
+
+/* Colours */
+.description {
+	color: #607A7E;
+}
+
+.yellow {
+	color: #DFDD4B;
+	font-weight: bold;
+}
+
+.disabled {
+	color: #607A7E;
+	cursor: default;
+}
+
+.error {
+	color: #F50042; 
+}
+
+/* Controls for Removing Things */
+.controls {
+	display: inline-block;
+	color: #DFDD4B;
+	cursor: pointer;
+	font-weight: bold;
+	padding-top: 1px;
+	vertical-align: top;
+	width: 25px;
+
+	span {
+		display: inline-block;
+		font-size: 18px;
+		height: 14px;
+		text-align: center;
+		vertical-align: top;
+		width: 10px;
+	}
+
+	.add { line-height: 14px; }
+	.sub { line-height: 12px; }
+}
+
+.clear {
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	height: 14px;
+	margin-left: 5px;
+	position: relative;
+	text-align: center;
+	width: 10px;
+}
+
+/* Toggle */
+.toggle {
+	background: url('../images/collapse.png') 0px -20px no-repeat;
+	display: inline-block;
+	height: 13px;
+	margin-left: 5px;
+	width: 13px;
+
+	&.closed {
+		background-position: 0px 0px;
+	}
+}

@@ -1,6 +1,6 @@
 <html>
 	<head>
-    <link rel="stylesheet" type="text/css" href="shadows.css">
+    <link rel="stylesheet" type="text/css" href="css/shadows.css">
 	</head>
 	<body ng-app="shadowrun_app" class="ng-scope">
 	  <div class="app_container" ng-controller="ShadowrunCtrl" ng-cloak>
@@ -73,7 +73,7 @@
         <div class="col magic">
           <h2>Magic / Resonance <div class="clear yellow" ng-click="clear_priority('magic')">x</div></h2>
 
-          <div  class="row row_{{priority.label}} align_left"
+          <div  class="row row_{{priority.label}}"
                 ng-repeat="priority in data_priorities"
                 ng-click="choose_priority(priority.label, 'magic')"
                 ng-class="{'disabled': priorities[priority.label] !== '', 'selected': priorities['magic'] === priority.label}"
