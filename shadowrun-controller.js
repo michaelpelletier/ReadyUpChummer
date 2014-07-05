@@ -537,8 +537,7 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 // Adept Powers
 // Magic Spells
 // Knowledge Skills 
-  // Academic and Professional are Logic
-  // Interest/Street/Language are Intuition
+
 
 
 // Multilevel Qualities (Positive) are not adding.
