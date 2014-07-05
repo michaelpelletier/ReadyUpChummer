@@ -262,7 +262,6 @@ h2 {
 	width: 10px;
 }
 
-
 /* Blue Containers */
 .summary_container {
 	display: inline-block;
@@ -285,6 +284,9 @@ h2 {
 	padding: 0px 10px 10px 10px;
 }
 
+.description {
+	color: #607A7E;
+}
 
 
 /* List Items */
@@ -505,15 +507,14 @@ h2 {
 	color: #607A7E;
 	cursor: pointer;
 	font-size: 12px;
+	line-height: 14px;
 	margin: 5px 10px;
+	vertical-align: top;
 }
 
-.level_rating,
-.quality_count {
-	color: #FFF;
-}
 
 .level_rating {
+	color: #FFF;
 	cursor: pointer;
 	display: inline-block;
 	margin: 0 2px;
@@ -543,9 +544,4 @@ h2 {
 
 .summary_container.drawbacks {
 
-}
-
-.quality_count {
-	font-weight: bold;
-	padding: 5px;
 }

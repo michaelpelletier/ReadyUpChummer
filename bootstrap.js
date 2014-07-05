@@ -434,7 +434,7 @@ var data_qualities = [
   }, 
   {
     name: 'Natural Immunity', 
-    cost: 0,
+    cost: 'Variable',
     ratings: 2,
     levels: [
       { name: '1', cost: 4}, 
@@ -492,7 +492,7 @@ var data_qualities = [
 var data_drawbacks = [
   {
     name: 'Addiction',
-    cost: 0,
+    cost: 'Variable',
     ratings: 4,
     levels: [
       { name: 'Mild',     cost:  -4 },
@@ -504,7 +504,7 @@ var data_drawbacks = [
   },
   {
     name: 'Allergy (Frequency)',
-    cost: 0,
+    cost: 'Variable',
     ratings: 2,
     levels: [
       {name: 'Common', cost: -7 },
@@ -514,7 +514,7 @@ var data_drawbacks = [
   },
   {
     name: 'Allergy (Severity)',
-    cost: 0,
+    cost: 'Variable',
     ratings: 4,
     levels: [
       {name: 'Mild',     cost: -3 },
@@ -603,7 +603,7 @@ var data_drawbacks = [
   },
   {
     name: 'Insomnia',
-    cost: 0,
+    cost: 'Variable',
     ratings: 2,
     levels: [
       {name: '1', cost: -10},
@@ -631,7 +631,7 @@ var data_drawbacks = [
   },
   {
     name: 'Prejudiced (Frequency)',
-    cost: 0,
+    cost: 'Variable',
     ratings: 2,
     levels: [
       { name: 'Specific', cost: -3},
@@ -641,7 +641,7 @@ var data_drawbacks = [
   },
   {
     name: 'Prejudiced (Severity)',
-    cost: 0,
+    cost: 'Variable',
     ratings: 3,
     levels: [
       { name: 'Biased', cost: 0},
@@ -670,7 +670,7 @@ var data_drawbacks = [
   },
   {
     name: 'Sin',
-    cost: 0,
+    cost: 'Variable',
     ratings: 4,
     levels: [
       { name: 'Natioanl', cost: -5 },

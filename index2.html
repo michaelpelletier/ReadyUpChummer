@@ -146,6 +146,9 @@
 
       <!-- Stats -->
       <div class="basics_container" ng-show="selected_tab == 2">
+
+        <h2>Stats</h2>
+
         <div class="row_container basics">
           <div class="summary_container" ng-stat>
             <h2>Racial Modifiers</h2>
@@ -311,24 +314,22 @@
 
       <!-- Qualities -->
       <div class="basics_container" ng-show="selected_tab == 4">
+        <h2>Qualities (<span ng-class="{error: quality_points_current < 0}">{{quality_points_current}} Karma Remaining</span>)</h2>
+
         <div class="row_container qualities">
-          <div class="my_qualities">
-            <div class="quality_count" ng-class="{error: quality_points_current < 0}">
-              ({{quality_points_current}} Karma Remaining)
-            </div>
-            
+          <div class="my_qualities">           
             <div class="summary_container my_quality_list">
-              <h2>My Qualities</h2>
+              <h2>My Qualities <span class="description">(Click to remove)</span></h2>
             </div>
             
             <div class="summary_container my_drawback_list">
-              <h2>My Drawbacks</h2>
+              <h2>My Drawbacks <span class="description">(Click to remove)</span></h2>
             </div>
           </div>
 
           <div class="list_qualities">
             <div class="summary_container qualities">
-              <h2>Qualities</h2>
+              <h2>Qualities <span class="description">(Click to add)</span></h2>
               <div class="qualities_container">
                 <div ng-repeat="quality in qualities" class="quality_item">
                   <div ng-show="!quality.levels" class="no_levels" ng-class="{available_quality: !quality.levels}" data-points="{{quality.cost}}" data-type="quality" quality-item>
@@ -362,7 +363,7 @@
               </div>
             </div>
             <div class="summary_container drawbacks">
-              <h2>Drawbacks</h2>
+              <h2>Drawbacks <span class="description">(Click to add)</span></h2>
               <div class="qualities_container">
                 <div ng-repeat="drawback in drawbacks" class="quality_item">
                   <div ng-show="!drawback.levels" class="no_levels" ng-class="{available_quality: !drawback.levels}" data-points="{{drawback.cost}}" data-type="drawback"  quality-item>
