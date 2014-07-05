@@ -511,33 +511,24 @@ var data_drawbacks = [
     description: ""
   },
   {
-    name: 'Allergy (Uncommon Substance)',
-    cost: -2,
-    ratings: 1,
+    name: 'Allergy (Frequency)',
+    cost: 0,
+    ratings: 2,
+    levels: [
+      {name: 'Common', cost: -7 },
+      {name: 'Uncommon', cost: -2}
+    ],
     description: ""
   },
   {
-    name: 'Allergy (Common Substance)',
-    cost: -7,
-    ratings: 1,
-    description: ""
-  },
-  {
-    name: 'Allergy (Moderate)',
-    cost: -8,
-    ratings: 1,
-    description: ""
-  },
-  {
-    name: 'Allergy (Severe)',
-    cost: -13,
-    ratings: 1,
-    description: ""
-  },
-  {
-    name: 'Allergy (Extreme)',
-    cost: -18,
-    ratings: 1,
+    name: 'Allergy (Severity)',
+    cost: 0,
+    ratings: 3,
+    levels: [
+      {name: 'Moderate', cost: -8 },
+      {name: 'Severe',  cost: -13 },
+      {name: 'Extreme', cost: -18 }
+    ],
     description: ""
   },
   {
@@ -580,6 +571,11 @@ var data_drawbacks = [
     name: 'Dependents',
     cost: -3,
     ratings: 3,
+    levels: [
+      { name: '1', cost: -3 },
+      { name: '2', cost: -6 },
+      { name: '3', cost: -9 }
+    ],
     description: ""
   },
   {
@@ -598,6 +594,12 @@ var data_drawbacks = [
     name: 'Gremlins',
     cost: -4,
     ratings: 4,
+    levels: [
+      { name: '1', cost:  -4 },
+      { name: '2', cost:  -8 },
+      { name: '3', cost: -12 },
+      { name: '4', cost: -16 }
+    ],
     description: ""
   },
   {
@@ -637,33 +639,24 @@ var data_drawbacks = [
     description: ""
   },
   {
-    name: 'Prejudiced (Specific)',
-    cost: -3,
-    ratings: 1,
-    description: ""
-  },
-  {
-    name: 'Prejudiced (Common)',
-    cost: -5,
-    ratings: 1,
-    description: ""
-  },
-  {
-    name: 'Prejudiced (Biased)',
+    name: 'Prejudiced (Frequency)',
     cost: 0,
-    ratings: 1,
+    ratings: 2,
+    levels: [
+      { name: 'Specific', cost: -3},
+      { name: 'Common', cost: -5 }
+    ],
     description: ""
   },
   {
-    name: 'Prejudiced (Outspoken)',
-    cost: -2,
-    ratings: 1,
-    description: ""
-  },
-  {
-    name: 'Prejudiced (Radical)',
-    cost: -5,
-    ratings: 1,
+    name: 'Prejudiced (Severity)',
+    cost: 0,
+    ratings: 3,
+    levels: [
+      { name: 'Biased', cost: 0},
+      { name: 'Outspoken', cost: -2 },
+      { name: 'Radical', cost: -5}
+    ],
     description: ""
   },
   {
@@ -685,27 +678,15 @@ var data_drawbacks = [
     description: ""
   },
   {
-    name: 'Sin (National)',
-    cost: -5,
-    ratings: 1,
-    description: ""
-  },
-  {
-    name: 'Sin (Criminal)',
-    cost: -10,
-    ratings: 1,
-    description: ""
-  },
-  {
-    name: 'Sin (Corporate Limited)',
-    cost: -15,
-    ratings: 1,
-    description: ""
-  },
-  {
-    name: 'Sin (Corporate)',
-    cost: -25,
-    ratings: 1,
+    name: 'Sin',
+    cost: 0,
+    ratings: 4,
+    levels: [
+      { name: 'Natioanl', cost: -5 },
+      { name: 'Criminal', cost: -10 },
+      { name: 'Corp. Limited', cost: -15},
+      { name: 'Corporate', cost: -25}
+    ],
     description: ""
   },
   {

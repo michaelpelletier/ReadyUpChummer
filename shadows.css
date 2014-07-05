@@ -419,21 +419,22 @@ h2 {
 	display: inline-block;
 	float: left;
 	vertical-align: top;
-	width: 245px;
+	width: 290px;
 }
 
 .list_qualities {
 	display: inline-block;
-	width: 655px;
+	width: 610px;
 }
 
 .quality_item {
 	display: inline-block;
 	font-size: 12px;
+	height: 14px;
 	margin: 3px 0px;
 	position: relative;
 	vertical-align: top;
-	width: 218px;
+	width: 100%;
 }
 
 .quality_name {
@@ -468,15 +469,12 @@ h2 {
 
 .list_qualities .summary_container {
 	color: #607A7E;
-	display: block;
-	float: none;
 	margin-bottom: 5px;
-	width: 100%;
+	width: 340px;
 }
 
-.summary_container.mine {
-	padding: 0px 10px 10px 10px;
-	width: 200px;
+.rating_labels {
+	display: inline-block;
 }
 
 .my_qualities h2 {
@@ -490,11 +488,8 @@ h2 {
 .quality_mine { 
 	color: #607A7E;
 	cursor: pointer;
-	margin: 5px 0px;
-}
-
-.available_quality {
-	height: 28px;
+	font-size: 12px;
+	margin: 5px 10px;
 }
 
 .level_rating,
@@ -515,4 +510,26 @@ h2 {
 
 .error {
 	color: #F50042; 
+}
+
+.my_qualities .summary_container {
+	margin-bottom: 5px;
+	width: 290px;
+}
+
+.summary_container.qualities {
+	width: 270px;
+}
+
+.qualities_container {
+	padding-left: 10px;
+}
+
+.summary_container.drawbacks {
+
+}
+
+.quality_count {
+	font-weight: bold;
+	padding: 5px;
 }

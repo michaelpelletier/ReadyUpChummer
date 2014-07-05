@@ -12,13 +12,18 @@ Shadowrun.Directives.directive('qualityItem', function ($compile) {
         var html = '';
         var quality_name = $(this).text();
         var point_value = parseInt($(elm).attr('data-points'));
+        var type = $(elm).attr('data-type');
 
         html += '<div class="quality_mine" data-points="' + point_value + '" ng-click="remove_quality($event)">';
         html += quality_name;
         html += '</div>';
         html = $compile(html)(scope);
 
-        $('.my_quality_list').append(html)
+        if (type === 'quality') {
+         $('.my_quality_list').append(html);
+        } else if (type === 'drawback') {
+          $('.my_drawback_list').append(html)
+        }
 
         scope.update_quality_points(point_value);
       });
@@ -48,14 +53,19 @@ Shadowrun.Directives.directive('qualityRanking', function ($compile) {
         var quality_name = $(elm).parents('.levels').find('.quality_name').text();
         var ranking = $(elm).attr('data-ranking');
         var point_value = parseInt($(elm).attr('data-points'));
+        var type = $(elm).attr('data-type');
 
         html += '<div class="quality_mine" data-points="' + point_value + '" ng-click="remove_quality($event)">';
         html += quality_name;
-        html += ' (Rating ' +  ranking + ')';
+        html += ' (Rating: ' +  ranking + ')';
         html += '</div>';
         html = $compile(html)(scope);
 
-        $('.my_quality_list').append(html)
+        if (type === 'quality') {
+          $('.my_quality_list').append(html);
+        } else if (type === 'drawback') {
+          $('.my_drawback_list').append(html)
+        }
 
         scope.update_quality_points(point_value);
       });

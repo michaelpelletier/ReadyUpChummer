@@ -269,83 +269,91 @@
       		</div>
       	</div>
 
-
         <div class="row_container qualities">
-
           <div class="my_qualities">
-            <h2>My Qualities / Drawbacks</h2>
-            <div class="summary_container mine">
-              <div class="quality_count" ng-class="{error: quality_points_current < 0}">
-                <span>{{quality_points_current}}</span> Karma Remaining
-              </div>
-              <div class="my_quality_list">
-
-              </div>
-
+            <div class="quality_count" ng-class="{error: quality_points_current < 0}">
+              ({{quality_points_current}} Karma Remaining)
+            </div>
+            
+            <div class="summary_container my_quality_list">
+              <h2>My Qualities</h2>
+            </div>
+            
+            <div class="summary_container my_drawback_list">
+              <h2>My Drawbacks</h2>
             </div>
           </div>
 
           <div class="list_qualities">
-            <div class="summary_container">
+            <div class="summary_container qualities">
               <h2>Qualities</h2>
-              <div ng-repeat="quality in qualities" class="quality_item" data-type="quality">
+              <div class="qualities_container">
+                <div ng-repeat="quality in qualities" class="quality_item">
+                  <div ng-show="!quality.levels" class="no_levels" ng-class="{available_quality: !quality.levels}" data-points="{{quality.cost}}" data-type="quality" quality-item>
+                    <span class="quality_name">{{quality.name}}</span>
+                    <div class="quality_hover hidden">
+                      <div class="name">{{quality.name}}</div>
+                      <div class="cost">{{quality.cost}} Karma</div>
+                      <div class="description">{{quality.description}}</div>
+                    </div>
+                  </div>     
 
-                <div ng-show="!quality.levels" class="no_levels" ng-class="{available_quality: !quality.levels}" data-points="{{quality.cost}}" quality-item>
-                  <span class="quality_name">{{quality.name}}</span>
-                  <div class="quality_hover hidden">
-                    <div class="name">{{quality.name}}</div>
-                    <div class="cost">{{quality.cost}} Karma</div>
-                    <div class="description">{{quality.description}}</div>
-                  </div>
-                </div>     
+                  <div ng-show="quality.levels" class="levels" ng-class="{available_quality: quality.levels}" data-type="quality" quality-tiered>
+                    <span class="quality_name disabled">{{quality.name}}</span>
 
-                <div ng-show="quality.levels" class="levels" ng-class="{available_quality: quality.levels}" quality-tiered>
-                  <span class="quality_name disabled">{{quality.name}}</span>
-
-                  <div class="rating_labels">
-                    Ratings: 
-                    <div  class="level_rating" 
-                          ng-repeat="level in quality.levels"
-                          data-ranking="{{level.name}}" 
-                          data-points="{{level.cost}}" 
-                          quality-ranking>{{level.name}}</div>
-                  </div>
-                  <div class="quality_hover hidden">
-                    <div class="name">{{quality.name}}</div>
-                    <div class="cost">{{quality.cost}} Karma per Rating</div>
-                    <div class="description">{{quality.description}}</div>
+                    <div class="rating_labels">
+                      - Rating: 
+                      <div  class="level_rating" 
+                            ng-repeat="level in quality.levels"
+                            data-ranking="{{level.name}}" 
+                            data-points="{{level.cost}}" 
+                            quality-ranking>{{level.name}}</div>
+                    </div>
+                    <div class="quality_hover hidden">
+                      <div class="name">{{quality.name}}</div>
+                      <div class="cost">{{quality.cost}} Karma per Rating</div>
+                      <div class="description">{{quality.description}}</div>
+                    </div>
                   </div>
                 </div>
- 
-
-
-
-                
-
-
-
               </div>
             </div>
-            <div class="summary_container">
+            <div class="summary_container drawbacks">
               <h2>Drawbacks</h2>
-              <div ng-repeat="drawback in drawbacks" data-type="drawback" data-points="{{drawback.cost}}" class="quality_item" quality-item>
-                <span>{{drawback.name}}</span>
-                <div class="quality_hover hidden">
-                  <div class="name">{{drawback.name}}</div>
-                  <div class="cost">{{drawback.cost}} Karma</div>
-                  <div class="description">{{drawback.description}}</div>
+              <div class="qualities_container">
+                <div ng-repeat="drawback in drawbacks" class="quality_item">
+                  <div ng-show="!drawback.levels" class="no_levels" ng-class="{available_quality: !drawback.levels}" data-points="{{drawback.cost}}" data-type="drawback"  quality-item>
+                    <span class="quality_name">{{drawback.name}}</span>
+                    <div class="quality_hover hidden">
+                      <div class="name">{{drawback.name}}</div>
+                      <div class="cost">{{drawback.cost}} Karma</div>
+                      <div class="description">{{drawback.description}}</div>
+                    </div>
+                  </div>     
+
+                  <div ng-show="drawback.levels" class="levels" ng-class="{available_quality: drawback.levels}" quality-tiered>
+                    <span class="quality_name disabled">{{drawback.name}}</span>
+
+                    <div class="rating_labels">
+                      - Rating: 
+                      <div  class="level_rating" 
+                            ng-repeat="level in drawback.levels"
+                            data-ranking="{{level.name}}" 
+                            data-points="{{level.cost}}" 
+                            data-type="drawback" 
+                            quality-ranking>{{level.name}}</div>
+                    </div>
+                    <div class="quality_hover hidden">
+                      <div class="name">{{drawback.name}}</div>
+                      <div class="cost">{{drawback.cost}} Karma per Rating</div>
+                      <div class="description">{{drawback.description}}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-
-
           </div>
-
-
         </div>
-
-
-
       </div>
     </div>
     <script type="text/javascript" src="lib/jquery-2.1.0.min.js"></script>
