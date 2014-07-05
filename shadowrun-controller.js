@@ -517,6 +517,13 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     $scope.$digest();
   }
 
+  $scope.remove_quality = function($event) {
+    var point_value = parseInt($($event.target).attr('data-points'));
+    $scope.quality_points_current += point_value;
+    $($event.target).remove();
+  }
+
+
 }]);
 
 

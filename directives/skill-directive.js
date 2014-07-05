@@ -63,7 +63,7 @@ Shadowrun.Directives.directive('skillsSection', function ($compile) {
 
       scope.$on('remove_specialty', function(event, specialty) {
         $(specialty).parents('.skill_specialty').remove();
-      })
+      });
     }
   }
 });

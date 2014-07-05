@@ -489,11 +489,23 @@ h2 {
 
 .quality_mine { 
 	color: #607A7E;
+	cursor: pointer;
 	margin: 5px 0px;
 }
 
+.available_quality {
+	height: 28px;
+}
+
+.level_rating,
 .quality_count {
 	color: #FFF;
+}
+
+.level_rating {
+	cursor: pointer;
+	display: inline-block;
+	margin: 0 2px;
 }
 
 .disabled {

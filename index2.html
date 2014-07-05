@@ -302,12 +302,13 @@
                 <div ng-show="quality.levels" class="levels" ng-class="{available_quality: quality.levels}" quality-tiered>
                   <span class="quality_name disabled">{{quality.name}}</span>
 
-                  <div class="">Ratings: 
-                    <!--<span ng-repeat="levels in quality">-->
-                      <span ng-repeat="level in quality.levels">
-                        {{level.name}}
-                      </span>
-       
+                  <div class="rating_labels">
+                    Ratings: 
+                    <div  class="level_rating" 
+                          ng-repeat="level in quality.levels"
+                          data-ranking="{{level.name}}" 
+                          data-points="{{level.cost}}" 
+                          quality-ranking>{{level.name}}</div>
                   </div>
                   <div class="quality_hover hidden">
                     <div class="name">{{quality.name}}</div>
