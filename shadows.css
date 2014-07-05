@@ -129,6 +129,22 @@ h2 {
 .row.error		.corners:before {	border-top: 	 15px solid #AF012C; }
 .row.error:before 	 					{ border-bottom: 15px solid #AF012C; }
 
+/* Navigation Changes */
+.navigation .row {
+	display: inline-block;
+	text-decoration: none;
+	width: 60px;
+}
+
+.navigation .row:after {
+	border-bottom: 15px solid #000;
+}
+
+.navigation .row.about {
+	float: right;
+}
+
+
 /* Specific Settings for Priority Labels */
 .row_A { height: 90px; }
 .row_B { height: 90px; }

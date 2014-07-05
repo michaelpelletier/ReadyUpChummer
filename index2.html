@@ -4,7 +4,28 @@
 	</head>
 	<body ng-app="shadowrun_app" class="ng-scope">
 	  <div class="app_container" ng-controller="ShadowrunCtrl" ng-cloak>
-   	  <div class="priorities">
+   	 
+
+    <div class="navigation">
+      <a class="row" href ng:click="selected_tab=1" ng-class="{selected: selected_tab===1}">Priority</a>
+      <a class="row" href ng:click="selected_tab=2" ng-class="{selected: selected_tab===2}">Stats</a>
+      <a class="row" href ng:click="selected_tab=3" ng-class="{selected: selected_tab===3}">Skills</a>
+      <a class="row" href ng:click="selected_tab=4" ng-class="{selected: selected_tab===4}">Qualities</a>
+      <a class="row" href ng:click="selected_tab=5" ng-class="{selected: selected_tab===5}">Powers</a>
+      <a class="row" href ng:click="selected_tab=6" ng-class="{selected: selected_tab===6}">Spells</a>
+      <a class="row" href ng:click="selected_tab=7" ng-class="{selected: selected_tab===7}">Augments</a>
+      <a class="row" href ng:click="selected_tab=8" ng-class="{selected: selected_tab===8}">Gear</a>
+      <a class="row" href ng:click="selected_tab=9" ng-class="{selected: selected_tab===9}">Summary</a>
+      <a class="row about" href ng:click="selected_tab=0" ng-class="{selected: selected_tab===0}">About</a>
+    </div>
+
+
+
+
+
+
+      <!-- Priority -->
+      <div class="priorities" ng-show="selected_tab == 1">
   			<div class="col explain">
           <h2> </h2>
           <div class="priority_row row_A">
@@ -123,10 +144,9 @@
         </div>
       </div>
 
-      <div class="basics_container">
-
-        <div class="section_toggle yellow" ng-model="hide_stats" ng-click="hide_stats=!hide_stats">Toggle Stats</div>
-        <div class="row_container basics" ng-hide="hide_stats">
+      <!-- Stats -->
+      <div class="basics_container" ng-show="selected_tab == 2">
+        <div class="row_container basics">
           <div class="summary_container" ng-stat>
             <h2>Racial Modifiers</h2>
 
@@ -157,7 +177,7 @@
             </div>
           </div>
 
-  		  	<div class="summary_container">
+          <div class="summary_container">
             <h2>Specials ({{race_points.current}} Points Remaining)</h2>
 
             <div class="summary_block">
@@ -256,19 +276,24 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="section_toggle yellow" ng-model="hide_skills" ng-click="hide_skills=!hide_skills">Toggle Skills</div>
-    	  <div class="row_container skills" ng-hide="hide_skills" skills-section>
-    	  	<div class="summary_container">
-    	  		<h2>Skills ({{skill_points.single}} Skill Points / {{skill_points.group}} Group Points Remaining)</h2>
+      <!-- Skills -->
+      <div class="basics_container" ng-show="selected_tab == 3">
+        <div class="row_container skills" skills-section>
+          <div class="summary_container">
+            <h2>Skills ({{skill_points.single}} Skill Points / {{skill_points.group}} Group Points Remaining)</h2>
             <my-table rows='skills_col_1'></my-table>
           </div>
           <div class="summary_container">
             <h2> </h2>
             <my-table rows='skills_col_2'></my-table>
-      		</div>
-      	</div>
+          </div>
+        </div>
+      </div>
 
+      <!-- Qualities -->
+      <div class="basics_container" ng-show="selected_tab == 4">
         <div class="row_container qualities">
           <div class="my_qualities">
             <div class="quality_count" ng-class="{error: quality_points_current < 0}">
@@ -355,6 +380,11 @@
           </div>
         </div>
       </div>
+
+
+
+
+
     </div>
     <script type="text/javascript" src="lib/jquery-2.1.0.min.js"></script>
     <script type="text/javascript" src="lib/angular.min.js"></script>

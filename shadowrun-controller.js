@@ -11,6 +11,8 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   $scope.drawbacks = data_drawbacks;
   $scope.quality_points_current = 25;
 
+  $scope.selected_tab = 1;
+
 	// A Few things for Priorities
   $scope.priorities = { 
   	"A": '', 
@@ -535,3 +537,9 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 // Adept Powers
 // Magic Spells
 // Knowledge Skills 
+  // Academic and Professional are Logic
+  // Interest/Street/Language are Intuition
+
+
+// Multilevel Qualities (Positive) are not adding.
+
