@@ -7,6 +7,9 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
   $scope.skills = data_skills;
   $scope.skills_col_1 = skills_col_1;
   $scope.skills_col_2 = skills_col_2;
+  $scope.qualities = data_qualities;
+  $scope.drawbacks = data_drawbacks;
+  $scope.quality_points_current = 25;
 
 	// A Few things for Priorities
   $scope.priorities = { 
@@ -55,7 +58,6 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     "Magic": { abbr: "Magic", label: "Magic", current: 0, minimum: 0, maximum: 0, type: 'special'},
     "Reson": { abbr: "Reson", label: "Resonance", current: 0, minimum: 0, maximum: 0, type: 'special'}
   }
-
 
 
   // Priority Stuff
@@ -510,9 +512,19 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     return initiative + " + " + dice;
   }
 
+  $scope.update_quality_points = function(point_value) {
+    $scope.quality_points_current -= point_value;
+    $scope.$digest();
+  }
+
 }]);
 
 
 
 // Currently no limit on Attributes. You could max all of them if you wanted to. Should only be able to max 1.
 // If you add a Skill Rank before adding the Group you can kinda cheat the system.
+
+/* TO DO */
+// Adept Powers
+// Magic Spells
+// Knowledge Skills 

@@ -142,11 +142,6 @@ var data_skills = {
   "E": {single: 10, group: 0}
 }
 
-
-
-
-
-
 var skills_col_1 = [
     { category: 'Combat', id: 5000, groups: [
         { name: 'Misc', id: 1000, skills: [
@@ -266,4 +261,487 @@ var skills_col_2 = [
               {name: 'Registering', id: 34, attribute: 'Reson'}]}
      ]
     }
+];
+
+var data_qualities = [
+  {
+    name: 'Ambidextrous', 
+    cost: 4,
+    ratings: 1,
+    description: "The Ambidextrous character can handle objects equally well with either hand. Without this quality, any action performed solely with the off-hand (i.e., firing a gun) suffers a -2 dice pool modifier."
+  }, 
+  {
+    name: 'Analytical Mind', 
+    cost: 5,
+    ratings: 1,
+    description: "Analytical Mind describes the uncanny ability to logically analyze information, deduce solutions to problems, or separate vital information from distractions and noise. It's useful in cracking cyphers, solving puzzles, figuing out traps, and sifting through data. This quality gives the character a +2 dice pool modifier to any Logic Tests involving a pattern recognition, evidence analysis, clue hunting, or solving puzzles. This quality also the time it takes the character to solve a problem by half."
+  }, 
+  {
+    name: 'Aptitude', 
+    cost: 14,
+    ratings: 1,
+    description: "The quality is how you become even better than the best in the world. The standard limit for skills is 12. Every so often, there is a character who can exceed limitations and be truly exceptional in a particular skill. With this particular quality, the character can have one skill rated at 7 at character creation, and may eventually build that skill up to rating 13. Characters may only take the Aptitude quality once."
+  },
+  {
+    name: 'Astral Chameleon', 
+    cost: 10,
+    ratings: 1,
+    description: "With the Astral Chameleon quality, the character's astral signature blends into the background of astral space and is difficult to detect. All signatures left by the character last only half as long as other astral signatures. Any individuals assensing astral signatures left behind by a character with this quality receive a -2 dice pool for the Assensing Test. Only characters with a Magic rating and capable of leaving astral signatures may have this quality."
+  }, 
+  {
+    name: 'Bilingual', 
+    cost: 5,
+    ratings: 1,
+    description: "A character with this quality reads, writes, and speaks a second language fluently. They can list a second language as a native tongue. This quality can only be acquired at character creation."
+  }, 
+  {
+    name: 'Blandness', 
+    cost: 8,
+    ratings: 1,
+    description: "" 
+  }, 
+  {
+    name: 'Catlike', 
+    cost: 7,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Codeslinger', 
+    cost: 10,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Double-Jointed', 
+    cost: 6,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Exceptional Attribute', 
+    cost: 14,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'First Impression', 
+    cost: 11,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Focused Concentration', 
+    cost: 4,
+    ratings: 6,
+    levels: [
+      { name: '1', cost:  4 },
+      { name: '2', cost:  8 },
+      { name: '3', cost: 12 },
+      { name: '4', cost: 16 },
+      { name: '5', cost: 20 },
+      { name: '6', cost: 24 }
+    ],
+    description: ""
+  },
+  {
+    name: 'Gearhead', 
+    cost: 11,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Guts', 
+    cost: 10,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'High Pain Tolerance', 
+    cost: 7,
+    ratings: 3,
+    levels: [
+      { name: '1', cost:  7 },
+      { name: '2', cost: 14 },
+      { name: '3', cost: 21 }
+    ],
+    description: ""
+  }, 
+  {
+    name: 'Home Ground', 
+    cost: 10,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Human-Looking', 
+    cost: 6,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Indomitable', 
+    cost: 8,
+    ratings: 3,
+    levels: [
+      { name: '1', cost:  8 },
+      { name: '2', cost: 16 },
+      { name: '3', cost: 24 }
+    ],
+    description: ""
+  }, 
+  {
+    name: 'Juryrigger', 
+    cost: 10,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Lucky', 
+    cost: 12,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Magic Resistance', 
+    cost: 6,
+    ratings: 4,
+    levels: [
+      { name: '1', cost:  6 },
+      { name: '2', cost: 12 },
+      { name: '3', cost: 18 },
+      { name: '4', cost: 24 }
+    ],
+    description: ""
+  }, 
+  {
+    name: 'Mentor Spirit', 
+    cost: 5,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Natural Athlete', 
+    cost: 7,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Natural Immunity', 
+    cost: 4,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Natural Immunity', 
+    cost: 10,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Photographic Memory', 
+    cost: 6,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Quick Healer', 
+    cost: 3,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Resistance (Pathogens / Toxins)', 
+    cost: 4,
+    ratings: 2,
+    levels: [
+      { name: '1', cost:  4 },
+      { name: '2', cost:  8 }
+    ],
+    description: ""
+  }, 
+  {
+    name: 'Spirit Affinity', 
+    cost: 7,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Toughness', 
+    cost: 9,
+    ratings: 1,
+    description: ""
+  }, 
+  {
+    name: 'Will to Live', 
+    cost: 3,
+    ratings: 3,
+    levels: [
+      { name: '1', cost:  3 },
+      { name: '2', cost:  6 },
+      { name: '3', cost:  9 }
+    ],
+    description: ""
+  } 
+];
+
+var data_drawbacks = [
+  {
+    name: 'Addiction (Mild)',
+    cost: -4,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Addiction (Moderate)',
+    cost: -9,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Addiction (Severe)',
+    cost: -20,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Burnout',
+    cost: -25,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Allergy (Uncommon Substance)',
+    cost: -2,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Allergy (Common Substance)',
+    cost: -7,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Allergy (Moderate)',
+    cost: -8,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Allergy (Severe)',
+    cost: -13,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Allergy (Extreme)',
+    cost: -18,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Astral Beacon',
+    cost: -10,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Bad Luck',
+    cost: -12,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Bad Rep',
+    cost: -7,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Code of Honor',
+    cost: -15,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Codeblock',
+    cost: -10,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Combat Paralysis',
+    cost: -12,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Dependents',
+    cost: -3,
+    ratings: 3,
+    description: ""
+  },
+  {
+    name: 'Distinctive Style',
+    cost: -5,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Elf Poser',
+    cost: -6,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Gremlins',
+    cost: -4,
+    ratings: 4,
+    description: ""
+  },
+  {
+    name: 'Incompetent',
+    cost: -5,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Insomnia',
+    cost: -10,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Insomnia',
+    cost: -15,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Loss of Confidence',
+    cost: -10,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Low Pain Tolerance',
+    cost: -9,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Ork Poser',
+    cost: -6,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Prejudiced (Specific)',
+    cost: -3,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Prejudiced (Common)',
+    cost: -5,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Prejudiced (Biased)',
+    cost: 0,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Prejudiced (Outspoken)',
+    cost: -2,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Prejudiced (Radical)',
+    cost: -5,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Scorched',
+    cost: -10,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Sensitive System',
+    cost: -12,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Simsense Vertigo',
+    cost: -5,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Sin (National)',
+    cost: -5,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Sin (Criminal)',
+    cost: -10,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Sin (Corporate Limited)',
+    cost: -15,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Sin (Corporate)',
+    cost: -25,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Social Stress',
+    cost: -8,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Spirit Bane',
+    cost: -7,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Uncouth',
+    cost: -14,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Uneducated',
+    cost: -8,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Unsteady Hands',
+    cost: -7,
+    ratings: 1,
+    description: ""
+  },
+  {
+    name: 'Weak Immune System',
+    cost: -10,
+    ratings: 1,
+    description: ""
+  }  
 ];

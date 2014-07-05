@@ -156,6 +156,7 @@ h2 {
 .row_container {
 	background: #153335;
 	clear: both;
+	font-size: 12px;
 	margin-bottom: 10px;
 	opacity: 0.8;
 }
@@ -391,6 +392,10 @@ h2 {
 	text-align: left;
 }
 
+.hidden {
+	display: none!important;
+}
+
 /* Colours */
 .yellow {
 	color: #DFDD4B;
@@ -407,4 +412,95 @@ h2 {
 
 .toggle.closed {
 	background-position: 0px 0px;
+}
+
+/* Qualities */
+.my_qualities {
+	display: inline-block;
+	float: left;
+	vertical-align: top;
+	width: 245px;
+}
+
+.list_qualities {
+	display: inline-block;
+	width: 655px;
+}
+
+.quality_item {
+	display: inline-block;
+	font-size: 12px;
+	margin: 3px 0px;
+	position: relative;
+	vertical-align: top;
+	width: 218px;
+}
+
+.quality_name {
+	color: #FFF;
+	cursor: pointer;
+}
+
+.quality_hover {
+	background: #1B4B4F;
+	display: block;
+	font-size: 12px;
+	padding: 10px;
+	position: absolute;
+	width: 250px;
+	z-index: 100;
+	box-shadow: 3px 3px 1px rgba(20,20,20,0.8);
+}
+
+.quality_hover .name {
+	color: #DFDD4B;
+	font-weight: bold;
+}
+
+.quality_hover .cost {
+	color: #607A7E;
+	font-weight: bold;
+}
+
+.quality_hover .description {
+	color: #FFF;
+}
+
+.list_qualities .summary_container {
+	color: #607A7E;
+	display: block;
+	float: none;
+	margin-bottom: 5px;
+	width: 100%;
+}
+
+.summary_container.mine {
+	padding: 0px 10px 10px 10px;
+	width: 200px;
+}
+
+.my_qualities h2 {
+	background: #1B4B4F;
+	margin-top: 0px;
+	min-height: 14px;
+	padding: 5px;
+	vertical-align: top;
+}
+
+.quality_mine { 
+	color: #607A7E;
+	margin: 5px 0px;
+}
+
+.quality_count {
+	color: #FFF;
+}
+
+.disabled {
+	color: #607A7E;
+	cursor: default;
+}
+
+.error {
+	color: #F50042; 
 }

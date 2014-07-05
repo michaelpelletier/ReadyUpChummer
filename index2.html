@@ -268,6 +268,83 @@
             <my-table rows='skills_col_2'></my-table>
       		</div>
       	</div>
+
+
+        <div class="row_container qualities">
+
+          <div class="my_qualities">
+            <h2>My Qualities / Drawbacks</h2>
+            <div class="summary_container mine">
+              <div class="quality_count" ng-class="{error: quality_points_current < 0}">
+                <span>{{quality_points_current}}</span> Karma Remaining
+              </div>
+              <div class="my_quality_list">
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="list_qualities">
+            <div class="summary_container">
+              <h2>Qualities</h2>
+              <div ng-repeat="quality in qualities" class="quality_item" data-type="quality">
+
+                <div ng-show="!quality.levels" class="no_levels" ng-class="{available_quality: !quality.levels}" data-points="{{quality.cost}}" quality-item>
+                  <span class="quality_name">{{quality.name}}</span>
+                  <div class="quality_hover hidden">
+                    <div class="name">{{quality.name}}</div>
+                    <div class="cost">{{quality.cost}} Karma</div>
+                    <div class="description">{{quality.description}}</div>
+                  </div>
+                </div>     
+
+                <div ng-show="quality.levels" class="levels" ng-class="{available_quality: quality.levels}" quality-tiered>
+                  <span class="quality_name disabled">{{quality.name}}</span>
+
+                  <div class="">Ratings: 
+                    <!--<span ng-repeat="levels in quality">-->
+                      <span ng-repeat="level in quality.levels">
+                        {{level.name}}
+                      </span>
+       
+                  </div>
+                  <div class="quality_hover hidden">
+                    <div class="name">{{quality.name}}</div>
+                    <div class="cost">{{quality.cost}} Karma per Rating</div>
+                    <div class="description">{{quality.description}}</div>
+                  </div>
+                </div>
+ 
+
+
+
+                
+
+
+
+              </div>
+            </div>
+            <div class="summary_container">
+              <h2>Drawbacks</h2>
+              <div ng-repeat="drawback in drawbacks" data-type="drawback" data-points="{{drawback.cost}}" class="quality_item" quality-item>
+                <span>{{drawback.name}}</span>
+                <div class="quality_hover hidden">
+                  <div class="name">{{drawback.name}}</div>
+                  <div class="cost">{{drawback.cost}} Karma</div>
+                  <div class="description">{{drawback.description}}</div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+
       </div>
     </div>
     <script type="text/javascript" src="lib/jquery-2.1.0.min.js"></script>
@@ -276,10 +353,12 @@
     <script type="text/javascript" src="lib/angular-sanitize.min.js"></script>
     <script type="text/javascript" src="bootstrap.js"></script>
     <script type="text/javascript" src="shadowrun-controller.js"></script>
+
     <script type="text/javascript" src="directives/race-directive.js"></script>
     <script type="text/javascript" src="directives/magic-directive.js"></script>
 		<script type="text/javascript" src="directives/special-directive.js"></script>
 		<script type="text/javascript" src="directives/stat-directive.js"></script>
     <script type="text/javascript" src="directives/skill-directive.js"></script>
+    <script type="text/javascript" src="directives/quality-directive.js"></script>
 	</body>
 </html>

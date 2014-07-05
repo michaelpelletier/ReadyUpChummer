@@ -45,9 +45,19 @@ Shadowrun.Directives.directive('skillsSection', function ($compile) {
       }
 
       scope.$on('add_specialty', function(event, skill_id) {
-        var html = '<div class="list-item skill skill_specialty"><span class="skill_name"><input value="New Skill"></span><span class="dice_pool">(+2)</span><span class="ranks"></span><span class="attribute"></span><div class="controls"><div class="clear yellow" ng-click="remove_specialty($event)">x</div></div></div>';
+        var html = '';
 
-        var html = $compile(html)(scope);
+        html += '<div class="list-item skill skill_specialty">';
+        html +=   '<span class="skill_name"><input value="New Skill"></span>';
+        html +=   '<span class="dice_pool">(+2)</span>';
+        html +=   '<span class="ranks"></span>';
+        html +=   '<span class="attribute"></span>';
+        html +=   '<div class="controls">';
+        html +=     '<div class="clear yellow" ng-click="remove_specialty($event)">x</div>';
+        html +=   '</div>';
+        html += '</div>';
+
+        html = $compile(html)(scope);
         $('[data-id="' + skill_id + '"]').append(html);
       });
 
