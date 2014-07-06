@@ -6,9 +6,9 @@ Shadowrun.Directives.directive('knowledgeSkills', function ($compile) {
 
       index = 20000;
 
-      $(element).find('.add').click(function() {
+      $(element).find('.add_skill').click(function() {
         var html = '<div>';
-        var attribute = 'Log';
+        var attribute = $(this).attr('data-attribute');
         var type = "'Knowledge'";
         var skill_add_info = index + "," + "'" + attribute + "'" + "," + type;
         var skill_remove_info = index + "," + type;
