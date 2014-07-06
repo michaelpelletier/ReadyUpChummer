@@ -290,6 +290,17 @@ h2 {
 .skill_category {
   padding-bottom: 10px; }
 
+.skills input {
+  background: transparent;
+  border: 0px;
+  color: #607A7E;
+  font-size: 12px;
+  outline: 0px;
+  padding: 0px;
+  width: 200px; }
+  .skills input:focus {
+    color: #FFF; }
+
 .skill {
   margin-left: 20px; }
   .skill .dice_pool,
@@ -317,16 +328,6 @@ h2 {
     width: 225px; }
   .skill_specialty .clear {
     font-size: 12px; }
-  .skill_specialty input {
-    background: transparent;
-    border: 0px;
-    color: #607A7E;
-    font-size: 12px;
-    outline: 0px;
-    padding: 0px;
-    width: 200px; }
-    .skill_specialty input:focus {
-      color: #FFF; }
 
 /* Groups */
 .group_name {

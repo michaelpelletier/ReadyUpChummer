@@ -44,6 +44,7 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
 
   $scope.skill_points = {single: 0, group: 0}
   $scope.my_skills = {}
+  $scope.knowledge_points = 0;
 
   $scope.essence = 6;
 
@@ -164,7 +165,6 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     if ($scope.my_race !== '') {
       $.each($scope.my_attributes, function(index, value) {
         if (value.label === attribute.label) {
-
           if (attribute.type === 'special') {
             if ((value.current < value.maximum) && ($scope.race_points.current > 0)) {
               value.current += 1;
@@ -174,6 +174,10 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
             if ((value.current < value.maximum) && ($scope.stat_points.current > 0)) {
               value.current += 1;
               $scope.stat_points.current -= 1;
+
+              if (attribute.abbr === 'Int' || attribute.abbr === 'Log') {
+                $scope.reset_knowledge();
+              }
             }
           }
         }
@@ -192,7 +196,11 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
             $scope.race_points.current += 1;
           } else {
             $scope.stat_points.current += 1;
-          }          
+          }
+
+          if (attribute.abbr === 'Int' || attribute.abbr === 'Log') {
+            $scope.reset_knowledge();
+          }
         }
       }
     });
@@ -332,55 +340,77 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     return value;
   }
 
-  // Stats
-
-
-
-
-
-
 
 
   // Skills
-  $scope.add_skill_rank = function(skill_id, ability) {
-    if ($scope.skill_points.single > 0) {
-
-      if ($('[data-id="' + skill_id + '"]').siblings('.ranks.group').text() > 0) {
-      // Group has ranks in it.
-      } else {
+  $scope.add_skill_rank = function(skill_id, ability, type) {
+    if (type === "Knowledge") {
+      if ($scope.knowledge_points > 0) {
         $scope.increase_skill_rank(skill_id);
         if ($scope.my_skills[skill_id].ranks < 6) {
           $scope.my_skills[skill_id].ranks += 1;
           $scope.my_skills[skill_id].attribute = ability;
-          $scope.skill_points.single -= 1;
+          $scope.knowledge_points -= 1;
         }
       }
-    }
+    } else if (type === "Active") {
+      if ($scope.skill_points.single > 0) {
+        if ($('[data-id="' + skill_id + '"]').siblings('.ranks.group').text() > 0) {
+        // Group has ranks in it.
+        } else {
+          $scope.increase_skill_rank(skill_id);
+          if ($scope.my_skills[skill_id].ranks < 6) {
+            $scope.my_skills[skill_id].ranks += 1;
+            $scope.my_skills[skill_id].attribute = ability;
+            $scope.skill_points.single -= 1;
+          }
+        }
+      }
+    }    
   }
 
-  $scope.remove_skill_rank = function(skill_id) {
+  $scope.remove_skill_rank = function(skill_id, type) {
     var skill = $scope.my_skills[skill_id]
 
-    if ($('[data-id="' + skill_id + '"]').siblings('.ranks.group').text() > 0) {
-    // Group has ranks in it.
-    } else {
+    if (type === "Knowledge") {
       if (skill) {
         if (skill.ranks > 0) {
          skill.ranks -= 1;
-         $scope.skill_points.single += 1;
+         $scope.knowledge_points += 1;
 
           if (skill.ranks === 0) {
             skill.ranks = '';
 
             var skill_points = $('[data-id="' + skill_id + '"]').find('.skill_specialty').length
             $('[data-id="' + skill_id + '"]').find('.skill_specialty').each(function() {
-              $scope.skill_points.single += 1;
+              $scope.knowledge_points += 1;
               $(this).remove();
             });
           }
         }
       }
-    }
+    } else if (type === "Active") {
+      if ($('[data-id="' + skill_id + '"]').siblings('.ranks.group').text() > 0) {
+      // Group has ranks in it.
+      } else {
+        if (skill) {
+          if (skill.ranks > 0) {
+           skill.ranks -= 1;
+           $scope.skill_points.single += 1;
+
+            if (skill.ranks === 0) {
+              skill.ranks = '';
+
+              var skill_points = $('[data-id="' + skill_id + '"]').find('.skill_specialty').length
+              $('[data-id="' + skill_id + '"]').find('.skill_specialty').each(function() {
+                $scope.skill_points.single += 1;
+                $(this).remove();
+              });
+            }
+          }
+        }
+      }
+    }  
   }
 
   $scope.increase_skill_rank = function(skill_id) {
@@ -469,20 +499,43 @@ Shadowrun.Controllers.controller('ShadowrunCtrl', ['$scope', '$timeout', functio
     }
   }
 
-  $scope.add_specialty = function(skill) {
+  $scope.add_specialty = function(skill, type) {
     var skill_ranks = $('[data-id="' + skill + '"]').find('.ranks').text();
     if (skill_ranks > 0) {
-      if ($scope.skill_points.single > 0) {
-        $scope.skill_points.single -= 1;
-        $scope.$broadcast('add_specialty', skill);       
+
+      if (type === "Knowledge") {
+        if ($scope.knowledge_points > 0) {
+          $scope.knowledge_points-= 1;
+          $scope.$broadcast('add_specialty', skill, type);       
+        }
+      } else if (type === "Active") {
+        if ($scope.skill_points.single > 0) {
+          $scope.skill_points.single -= 1;
+          $scope.$broadcast('add_specialty', skill, type);       
+        }
       }
     }
   }
 
   $scope.remove_specialty = function($event) {
-    $scope.skill_points.single += 1;
+    if ($event.target.attributes['data-type'].value === "Knowledge") {
+      $scope.knowledge_points += 1;
+    } else if ($event.target.attributes['data-type'].value === "Active") {
+      $scope.skill_points.single += 1;
+    }   
     $scope.$broadcast('remove_specialty', $event.target)
   }
+
+  $scope.reset_knowledge = function() {
+    var kn_points;
+
+    var int_rank = $scope.my_attributes['Int'].current;
+    var log_rank = $scope.my_attributes['Log'].current;
+
+    kn_points = (int_rank + log_rank) * 2;
+    $scope.knowledge_points = kn_points;
+  }
+
 
   // Initiatives
   $scope.get_initiative = function(type) {

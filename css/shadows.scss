@@ -372,6 +372,22 @@ h2 {
 	padding-bottom: 10px;
 }
 
+.skills {
+	input {
+		background: transparent;
+		border: 0px;
+		color: #607A7E;
+		font-size: 12px;
+		outline: 0px;
+		padding: 0px;
+		width: 200px;
+
+		&:focus {
+			color: #FFF;
+		}
+	}
+}
+
 .skill {
 	margin-left: 20px;
 
@@ -408,20 +424,6 @@ h2 {
 
 	.clear {
 		font-size: 12px;
-	}
-
-	input {
-		background: transparent;
-		border: 0px;
-		color: #607A7E;
-		font-size: 12px;
-		outline: 0px;
-		padding: 0px;
-		width: 200px;
-
-		&:focus {
-			color: #FFF;
-		}
 	}
 }
 

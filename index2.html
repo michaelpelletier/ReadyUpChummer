@@ -295,12 +295,17 @@
           </div>
         </div>
 
-        <h2>Knowledge Skills (X Skill Points Remaining)</h2>
+        <h2>Knowledge Skills ({{knowledge_points}} Skill Points Remaining)</h2>
 
         <div class="row_container skills">
-          <div class="summary_container">
-            <h2>Interests</h2>
+          <div class="summary_container" knowledge-skills>
+            <div class="list-skill-group">
+              <h2>Interests <a class="add">Add</a></h2>
+              <div class="skills"></div>
+            </div>
+
             <h2>Street</h2>
+
             <h2>Language</h2>
           </div>
           <div class="summary_container">
@@ -418,5 +423,6 @@
 		<script type="text/javascript" src="directives/stat-directive.js"></script>
     <script type="text/javascript" src="directives/skill-directive.js"></script>
     <script type="text/javascript" src="directives/quality-directive.js"></script>
+    <script type="text/javascript" src="directives/knowledge-directive.js"></script>
 	</body>
 </html>

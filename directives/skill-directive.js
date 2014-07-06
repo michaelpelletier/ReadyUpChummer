@@ -44,16 +44,16 @@ Shadowrun.Directives.directive('skillsSection', function ($compile) {
         });
       }
 
-      scope.$on('add_specialty', function(event, skill_id) {
+      scope.$on('add_specialty', function(event, skill_id, type) {
         var html = '';
 
         html += '<div class="list-item skill skill_specialty">';
-        html +=   '<span class="skill_name"><input value="New Skill"></span>';
+        html +=   '<span class="skill_name"><input value="Enter Skill Specialization"></span>';
         html +=   '<span class="dice_pool">(+2)</span>';
         html +=   '<span class="ranks"></span>';
         html +=   '<span class="attribute"></span>';
         html +=   '<div class="controls">';
-        html +=     '<div class="clear yellow" ng-click="remove_specialty($event)">x</div>';
+        html +=     '<div class="clear yellow" data-type="' + type + '" ng-click="remove_specialty($event)">x</div>';
         html +=   '</div>';
         html += '</div>';
 
@@ -109,10 +109,12 @@ Shadowrun.Directives.directive('myTable', function ($compile) {
             if ('skills' in group) {
               angular.forEach(group.skills, function (skill, index) {
                 var attributes = "'" + skill.attribute + "'";
-                var skill_information = skill.id + "," + attributes;
+                var type = "'Active'";
+                var skill_add_info = skill.id + "," + attributes + "," + type;
+                var skill_remove_info = skill.id + "," + type;
 
                 html += '<div class="list-item skill" data-id="' + skill.id + '" data-attribute="' + skill.attribute + '" >';
-                html +=   '<span class="skill_name" ng-click="add_specialty(' + skill.id + ')" title="Click to add Specialty">';
+                html +=   '<span class="skill_name" ng-click="add_specialty(' + skill_remove_info + ')" title="Click to add Specialty">';
                 html +=     skill.name;
                 html +=   '</span>';
                 html +=   '<span class="dice_pool" ng-bind="get_dice_pool(' + skill.id + ')"></span>';
@@ -122,8 +124,8 @@ Shadowrun.Directives.directive('myTable', function ($compile) {
                 html +=     ' (' + skill.attribute + ')';
                 html +=   '</span>';
                 html +=   '<div class="controls">';
-                html +=     '<span ng-click="add_skill_rank(' + skill_information + ')" class="add">+</span>';
-                html +=     '<span ng-click="remove_skill_rank(' + skill.id + ')" class="sub">-</span>';
+                html +=     '<span ng-click="add_skill_rank(' + skill_add_info + ')" class="add">+</span>';
+                html +=     '<span ng-click="remove_skill_rank(' + skill_remove_info + ')" class="sub">-</span>';
                 html +=   '</div>';
                 html += '</div>';
               });
